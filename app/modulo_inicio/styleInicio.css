@@ -1,0 +1,440 @@
+/* ============================================
+   STYLEINICIO.CSS - ESTILOS MÓDULO DE INICIO
+   Login, Dashboard, Cambiar contraseña
+   ============================================ */
+
+/* ------------------ LOGIN ------------------ */
+.body_login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+    background-image: url('../img/fondojusticia.jpg');
+    background-size: cover;
+    background-position: center;
+    backdrop-filter: blur(10px);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+
+}
+
+
+.login-wrapper {
+    width: 100%;
+    max-width: 480px;
+    margin: auto;
+    padding: 40px 20px;
+    box-sizing: border-box;
+}
+
+
+.login {
+    background-color: #d0d9ec;
+    padding: 0.3rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    margin: auto;
+    width: 90%;
+    max-width: 400px;
+    margin: auto;
+    padding: 1.9rem;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+
+}
+
+.login h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 1.75rem;
+}
+
+.login label {
+    display: block;
+    margin-top: 10px;
+    color: #555;
+    font-weight: bold;
+    font-size: 0.95rem;
+}
+
+.login input[type="text"],
+.login input[type="password"] {
+    width: 100%;
+    padding: 15px 20px;
+    margin-top: 10px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+.login input[type="text"]:focus,
+.login input[type="password"]:focus {
+    outline: none;
+    border-color: #0077cc;
+}
+
+.login button {
+    width: 100%;
+    padding: 22px;
+    margin-top: 35px;
+    background-color: #0077cc;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.login button:hover {
+    background-color: #005fa3;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 119, 204, 0.3);
+}
+
+.login button:active {transform: translateY(0);}
+.logobufete {text-align: center;margin-bottom: 20px;}
+.logobufete img {width: 100%;max-width: 320px;height: auto;}
+
+
+/* Alertas en login */
+.alert {
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+}
+.alert i {font-size: 1.1rem;}
+
+.alert-error {
+    background-color: #fee;
+    color: #c33;
+    border: 1px solid #fcc;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+
+/* Responsividad login */
+@media (max-width: 768px) {.login-wrapper {padding: 30px 15px;}
+    .login { padding: 2rem 1.5rem; max-width: 100%; }
+    .login h2 {font-size: 1.5rem;}
+    .login input[type="text"],
+    .login input[type="password"] {padding: 12px 16px;font-size: 0.95rem;}
+    .login button {padding: 14px;font-size: 0.95rem;}
+    .logobufete img {max-width: 200px;}}
+
+@media (max-width: 480px) {.login-wrapper {padding: 20px 10px;}
+    .login {padding: 1.5rem 1rem;}
+    .login h2 {font-size: 1.3rem;margin-bottom: 10px;}
+    .login label {font-size: 0.9rem;}
+    .login input[type="text"],
+    .login input[type="password"] {padding: 10px 14px;font-size: 0.9rem;}
+
+    .login button {padding: 12px;font-size: 0.9rem;}
+    .logobufete img {max-width: 160px;}}
+
+@media (max-height: 600px) {
+    .login-wrapper { padding: 20px 15px;}
+    .login {padding: 1.5rem;}
+    .logobufete img {max-width: 150px;}
+    .login h2 { font-size: 1.3rem;margin-bottom: 10px;}
+}
+@media (min-width: 1200px) {
+    .logobufete img {max-width: 300px;}
+}
+
+/* ------------------ DASHBOARD ----------------- */
+.body_dash {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background:
+        linear-gradient(135deg, rgba(102, 126, 234, 0.85) 0%, rgba(98, 112, 190, 0.85) 100%),
+        url('../img/fondojusticia.jpg');
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.body_dash::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.dashboard-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 120px 60px 80px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.dashboard-header {
+    text-align: center;
+    margin-bottom: 50px;
+    animation: fadeInDown 0.8s ease;
+}
+
+.dashboard-title {
+    color: #ffffff;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.dashboard-title i {
+    font-size: 3rem;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.dashboard-subtitle {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.2rem;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+.modulos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    width: 100%;
+    max-width: 1400px;
+    padding: 0 20px;
+}
+
+.modulo-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 25px 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    text-decoration: none;
+    color: #333;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    animation: fadeInUp 0.6s ease backwards;
+}
+
+.modulo-card:nth-child(1) {animation-delay: 0.1s;}
+.modulo-card:nth-child(2) {animation-delay: 0.2s;}
+.modulo-card:nth-child(3) {animation-delay: 0.3s;}
+.modulo-card:nth-child(4) {animation-delay: 0.4s;}
+.modulo-card:nth-child(5) {animation-delay: 0.5s;}
+.modulo-card:nth-child(6) {animation-delay: 0.6s;}
+.modulo-card:nth-child(7) {animation-delay: 0.7s;}
+
+.modulo-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transform: rotate(45deg);
+    transition: all 0.6s;
+}
+
+.modulo-card:hover::before {left: 100%;}
+.modulo-card:hover {transform: translateY(-8px) scale(1.02); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);}
+
+.card-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    transition: all 0.4s;
+    position: relative;
+}
+
+.card-icon i {font-size: 2.2rem;color: white;transition: all 0.3s;}
+.modulo-card:hover .card-icon {transform: rotate(360deg) scale(1.1);}
+.modulo-card.estudiantes .card-icon {background: linear-gradient(135deg, #667eea, #764ba2);}
+.modulo-card.interesados .card-icon {background: linear-gradient(135deg, #f093fb, #f5576c);}
+.modulo-card.asesores .card-icon {background: linear-gradient(135deg, #4facfe, #00f2fe);}
+.modulo-card.expedientes .card-icon {background: linear-gradient(135deg, #43e97b, #38f9d7);}
+.modulo-card.prestamos .card-icon {background: linear-gradient(135deg, #fa709a, #fee140);}
+.modulo-card.reportes .card-icon {background: linear-gradient(135deg, #30cfd0, #330867);}
+.modulo-card.usuarios .card-icon {background: linear-gradient(135deg, #a8edea, #fed6e3);}
+.card-title {font-size: 1.1rem;font-weight: 700;color: #2c3e50;margin-bottom: 8px;}
+.card-description {font-size: 0.85rem; color: #7f8c8d; margin-bottom: 15px; line-height: 1.4;}
+.card-arrow {margin-top: auto; opacity: 0; transform: translateX(-20px); transition: all 0.3s;}
+.card-arrow i {font-size: 1.5rem; color: #667eea;}
+.modulo-card:hover .card-arrow {opacity: 1; transform: translateX(0);}
+
+/* Animaciones */
+@keyframes fadeInDown {
+    from {opacity: 0;transform: translateY(-30px);}
+    to {opacity: 1;transform: translateY(0);}}
+
+@keyframes fadeInUp {
+    from {opacity: 0; transform: translateY(30px);}
+    to {opacity: 1; transform: translateY(0);}}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1);} 50% {transform: scale(1.1); }}
+
+
+
+/* ------------------ CAMBIAR CONTRASEÑA ------------------ */
+.container-cambio {
+    max-width: 500px;
+    margin: 50px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header-cambio {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.header-cambio img {
+    max-width: 150px;
+    margin-bottom: 10px;
+}
+
+.form-group {margin-bottom: 15px;}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.container-cambio button {
+    width: 100%;
+    padding: 12px;
+    background: #4682b4;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.container-cambio button:hover {
+    background: #366a94;
+}
+
+.container-cambio button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.btn-secondary {
+    display: block;
+    text-align: center;
+    padding: 12px;
+    background: #6c757d;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.password-requirements {
+    background: #f0f8ff;
+    border: 1px solid #4682b4;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 15px 0;
+    font-size: 14px;
+}
+
+.requirement {padding: 5px 0;color: #666;}
+.requirement.valid {color: #2d862d;}
+.requirement.invalid {color: #c53030;}
+.requirement::before {content: "✗ ";font-weight: bold;}
+.requirement.valid::before {content: "✓ ";}
+
+.password-strength {
+    height: 5px;
+    border-radius: 3px;
+    margin-top: 5px;
+    transition: all 0.3s;
+}
+
+.strength-weak {background: #e53e3e;width: 33%;}
+.strength-medium {background: #dd6b20;width: 66%;}
+.strength-strong {background: #38a169;width: 100%;}
+
+.mensaje-exito {
+    background: #c6f6d5;
+    border: 1px solid #38a169;
+    color: #22543d;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.mensaje-error {
+    background: #fed7d7;
+    border: 1px solid #e53e3e;
+    color: #742a2a;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    text-align: center;
+}
