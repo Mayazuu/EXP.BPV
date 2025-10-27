@@ -41,9 +41,9 @@ try {
         throw new Exception("El estudiante {$estudiante['nombre']} {$estudiante['apellido']} está INACTIVO. No se pueden registrar préstamos a estudiantes inactivos.");
     }
 
-    // ===== VALIDACIÓN 2: Estudiante debe tener DPI =====
-    if (empty($estudiante['dpi_estudiante'])) {
-        throw new Exception("El estudiante {$estudiante['nombre']} {$estudiante['apellido']} no tiene DPI registrado. Es obligatorio para realizar préstamos.");
+    // ===== VALIDACIÓN 2: Estudiante debe tener DPI O Carnet Estudiantil =====
+    if (empty($estudiante['dpi_estudiante']) && empty($estudiante['carnetEstudiantil'])) {
+        throw new Exception("El estudiante {$estudiante['nombre']} {$estudiante['apellido']} no tiene DPI ni Carnet Estudiantil registrado. Es obligatorio tener al menos uno para realizar préstamos.");
     }
 
         // ===== VALIDACIÓN 3: Expediente debe existir =====
@@ -91,7 +91,18 @@ try {
 
     // ===== REGISTRAR EN TRANSACCIONES =====
     $ip = $_SERVER['REMOTE_ADDR'];
-    $descripcion = "Registro de préstamo ID: $id_prestamo - Expediente: $id_expediente ({$expediente['ficha_social']}), Estudiante: {$estudiante['nombre']} {$estudiante['apellido']} (ID: $id_estudiante, DPI: {$estudiante['dpi_estudiante']})";
+    
+    // Construir identificación del estudiante (DPI y/o Carnet)
+    $identificacion = [];
+    if (!empty($estudiante['dpi_estudiante'])) {
+        $identificacion[] = "DPI: {$estudiante['dpi_estudiante']}";
+    }
+    if (!empty($estudiante['carnetEstudiantil'])) {
+        $identificacion[] = "Carnet: {$estudiante['carnetEstudiantil']}";
+    }
+    $identificacion_str = implode(', ', $identificacion);
+    
+    $descripcion = "Registro de préstamo ID: $id_prestamo - Expediente: $id_expediente ({$expediente['ficha_social']}), Estudiante: {$estudiante['nombre']} {$estudiante['apellido']} (ID: $id_estudiante, $identificacion_str)";
 
     $stmt = $conn->prepare("
         INSERT INTO transacciones (id_usuario, tabla, id_registro, descripcion, fecha_hora, ip)

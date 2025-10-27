@@ -14,6 +14,6 @@ if (isset($_COOKIE[session_name()])) {
 session_destroy();
 
 // Redirigir con RUTA ABSOLUTA (consistente con session_config.php)
-header("Location: /bufete2/app/modulo_inicio/login.php?logout=1");
+header("Location: /bufete/app/modulo_inicio/login.php?logout=1");
 exit();
 ?>
