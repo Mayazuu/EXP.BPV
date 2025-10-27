@@ -2,9 +2,6 @@
 // logout.php
 include('../session_config.php');
 
-$usuario = $_SESSION['usuario'] ?? 'Desconocido';
-$id_usuario = $_SESSION['id_usuario'] ?? null;
-
 // Limpiar todas las variables de sesión
 $_SESSION = array();
 
@@ -16,7 +13,7 @@ if (isset($_COOKIE[session_name()])) {
 // Destruir la sesión
 session_destroy();
 
-// Redirigir al login con mensaje de logout exitoso
-header("Location: login.php?logout=1");
+// Redirigir con RUTA ABSOLUTA (consistente con session_config.php)
+header("Location: /bufete2/app/modulo_inicio/login.php?logout=1");
 exit();
 ?>

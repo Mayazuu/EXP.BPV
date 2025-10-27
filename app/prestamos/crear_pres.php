@@ -1,6 +1,6 @@
 <?php
-include('../conexion.php');
 include('../session_config.php');
+include('../conexion.php');
 
 // Validar sesión y rol
 if (!isset($_SESSION['id_usuario']) || !in_array($_SESSION['rol'], ['Secretaria', 'Directora'])) {
@@ -46,29 +46,18 @@ try {
         throw new Exception("El estudiante {$estudiante['nombre']} {$estudiante['apellido']} no tiene DPI registrado. Es obligatorio para realizar préstamos.");
     }
 
-    // ===== VALIDACIÓN 3: Expediente debe ser EJECUTIVO del área Familia =====
-    $stmt = $conn->prepare("
-        SELECT e.id_expediente, e.ficha_social, tc.caso as tipo_caso, a.area as tipo_expediente
-        FROM expedientes e
-        INNER JOIN tipo_caso tc ON e.id_tipo_exp = tc.id_tipo_exp
-        INNER JOIN areas a ON tc.id_area = a.id_area
-        WHERE e.id_expediente = ?
-    ");
-    $stmt->execute([$id_expediente]);
-    $expediente = $stmt->fetch(PDO::FETCH_ASSOC);
+        // ===== VALIDACIÓN 3: Expediente debe existir =====
+        $stmt = $conn->prepare("
+            SELECT e.id_expediente, e.ficha_social
+            FROM expedientes e
+            WHERE e.id_expediente = ?
+        ");
+        $stmt->execute([$id_expediente]);
+        $expediente = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if (!$expediente) {
-        throw new Exception("El expediente N° $id_expediente no existe.");
-    }
-
-    // Verificar que sea del área Familia Y tipo Ejecutivo
-    if (stripos($expediente['tipo_expediente'], 'familia') === false) {
-        throw new Exception("El expediente N° $id_expediente no es del área de Familia. Solo se pueden prestar expedientes del área de Familia.");
-    }
-
-    if (stripos($expediente['tipo_caso'], 'ejecutivo') === false) {
-        throw new Exception("El expediente N° $id_expediente ({$expediente['ficha_social']}) no es de tipo EJECUTIVO. Solo se pueden prestar expedientes ejecutivos.");
-    }
+        if (!$expediente) {
+            throw new Exception("El expediente N° $id_expediente no existe.");
+        }
 
     // ===== VALIDACIÓN 4: Expediente debe estar disponible =====
     $stmt = $conn->prepare("

@@ -3,30 +3,10 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-
-// Si el usuario ya tiene sesión activa, redirigir
-if (isset($_SESSION['id_usuario'])) {
-    // Redirigir según el rol
-    switch ($_SESSION['rol']) {
-        case 'Secretaria':
-            header("Location: ../modulo_secretaria/index.php");
-            break;
-        case 'Directora':
-            header("Location: ../modulo_directora/index.php");
-            break;
-        case 'Estudiante':
-            header("Location: ../modulo_estudiante/index.php");
-            break;
-        default:
-            header("Location: ../modulo_secretaria/index.php");
-    }
-    exit();
-}
-
-// Mensaje de timeout con decodificación
+// Mensaje de timeout
 $mensaje_timeout = '';
 if (isset($_GET['timeout']) && $_GET['timeout'] == '1') {
-    $mensaje_timeout = isset($_GET['mensaje']) ? urldecode($_GET['mensaje']) : 'Su sesión ha expirado por inactividad.';
+    $mensaje_timeout = $_GET['mensaje'] ?? 'Su sesión ha expirado por inactividad.';
 }
 
 // Mensaje de logout exitoso
@@ -36,8 +16,9 @@ if (isset($_GET['logout']) && $_GET['logout'] == '1') {
 }
 
 // Mensaje de error general
-$error = isset($_GET['error']) ? urldecode($_GET['error']) : '';
+$error = $_GET['error'] ?? '';
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -108,7 +89,6 @@ $error = isset($_GET['error']) ? urldecode($_GET['error']) : '';
 
 </body>
 </html>
-
 
 
 

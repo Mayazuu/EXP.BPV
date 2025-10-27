@@ -1,6 +1,6 @@
 <?php
-include('../conexion.php');
 include('../session_config.php');
+include('../conexion.php');
 
 
 if (!isset($_SESSION['id_usuario']) || !in_array($_SESSION['rol'], ['Secretaria', 'Directora'])) {
@@ -122,7 +122,7 @@ $hay_busqueda = !empty($buscar_nombre) || !empty($buscar_apellido) || !empty($bu
                 <h1>👥 Gestión de Interesados</h1>
             </div>
 
-            <!-- BARRA DE ACCIONES CON BÚSQUEDA MEJORADA -->
+            <!-- BARRA DE ACCIONES CON BÚSQUEDA -->
             <div class="action-bar">
                 <form method="GET" action="" class="search-form-advanced">
                     <div class="search-group">
@@ -241,7 +241,7 @@ $hay_busqueda = !empty($buscar_nombre) || !empty($buscar_apellido) || !empty($bu
                                     <td><?= htmlspecialchars($int['municipio']) ?></td>
                                     <td>
                                         <div class="btn-group">
-                                            <?php if ($_SESSION['rol'] === 'Directora'): ?>
+                                            <?php if (in_array($_SESSION['rol'], ['Directora', 'Secretaria'])): ?>
                                                 <button onclick="abrirModalEditar(
                                                     <?= $int['id_interesado'] ?>,
                                                     '<?= htmlspecialchars($int['dpi_interesado'] ?? '', ENT_QUOTES) ?>',

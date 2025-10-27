@@ -1,6 +1,6 @@
 <?php
+include('../session_config.php');
 include('../conexion.php');
-session_start();
 
 // Validar sesión - SOLO DIRECTORA
 if (!isset($_SESSION['id_usuario']) || $_SESSION['rol'] != 'Directora') {

@@ -1,6 +1,6 @@
 <?php
-include('../conexion.php');
 include('../session_config.php');
+include('../conexion.php');
 
 
 if (!isset($_SESSION['id_usuario']) || !in_array($_SESSION['rol'], ['Secretaria', 'Directora'])) {

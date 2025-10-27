@@ -1,4 +1,5 @@
 <?php
+include('../session_config.php');
 include('../conexion.php');
 
 if (isset($_GET['id_expediente'])) {

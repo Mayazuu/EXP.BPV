@@ -8,18 +8,22 @@ if (session_status() === PHP_SESSION_NONE) {
 
 define('TIEMPO_INACTIVIDAD', 1800); // 30 minutos
 
-// Función para obtener la ruta correcta del login según ubicación
+// Función para obtener la ruta correcta del login
 function obtener_ruta_login() {
-    $ruta_actual = $_SERVER['PHP_SELF'];
+    // Obtener la ruta del script actual
+    $script_path = $_SERVER['SCRIPT_NAME'];
     
-    // Si estamos en modulo_inicio, la ruta es local
-    if (strpos($ruta_actual, '/modulo_inicio/') !== false) {
-        return 'login.php';
-    } 
-    // Si estamos en otro módulo (secretaria, reportes, etc)
-    else {
-        return '../modulo_inicio/login.php';
+    // Contar cuántos niveles de profundidad hay
+    $niveles = substr_count(dirname($script_path), '/') - substr_count($_SERVER['DOCUMENT_ROOT'], '/');
+    
+    // Si estamos en la raíz o en modulo_inicio
+    if ($niveles <= 1 || strpos($script_path, '/modulo_inicio/') !== false) {
+        return '/bufete2/app/modulo_inicio/login.php';
     }
+    
+    // Para cualquier otro módulo, construir ruta relativa
+    $prefijo = str_repeat('../', $niveles - 1);
+    return $prefijo . 'modulo_inicio/login.php';
 }
 
 if (isset($_SESSION['id_usuario'])) {
@@ -33,11 +37,8 @@ if (isset($_SESSION['id_usuario'])) {
             session_unset();
             session_destroy();
             
-            // Obtener ruta correcta del login
-            $ruta_login = obtener_ruta_login();
-            
-            // Redirigir con mensaje
-            header("Location: " . $ruta_login . "?timeout=1&mensaje=" . urlencode($mensaje_timeout));
+            // Redirigir con ruta absoluta
+            header("Location: /bufete2/app/modulo_inicio/login.php?timeout=1&mensaje=" . urlencode($mensaje_timeout));
             exit();
         }
     }

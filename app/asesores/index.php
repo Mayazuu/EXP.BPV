@@ -1,6 +1,6 @@
 <?php
-include('../conexion.php');
 include('../session_config.php');
+include('../conexion.php');
 
 if (!isset($_SESSION['id_usuario']) || !in_array($_SESSION['rol'], ['Secretaria', 'Directora'])) {
     session_destroy();
@@ -279,23 +279,43 @@ $paginaSiguiente = min($total_paginas, $pagina_actual + 1);
     </div>
 </div>
 
-<!-- MODAL EDITAR TELÉFONO -->
+<!-- MODAL EDITAR ASESOR -->
 <div id="modalEditar" class="modal">
     <div class="modal-content" style="max-width: 600px;">
         <div class="modal-header">
-            <h2>✏️ Editar Teléfono del Asesor</h2>
+            <h2>✏️ Editar Asesor</h2>
             <span class="modal-close" onclick="cerrarModalEditar()">&times;</span>
         </div>
         <form id="formEditar" method="POST" action="editar_ase.php">
             <div style="padding: 1.5rem;">
                 <div style="background: var(--light-blue); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
-                    <strong>📌 Asesor:</strong>
+                    <strong>📌 Editando Asesor ID:</strong>
                     <div id="infoAsesor" style="margin-top: 0.5rem;"></div>
                 </div>
 
                 <div class="form-group">
+                    <label for="nombre_editar">
+                        Nombre <span style="color: #ef4444;">*</span>
+                    </label>
+                    <input type="text" id="nombre_editar" name="nombre"
+                        required
+                        maxlength="100"
+                        placeholder="Nombre del asesor">
+                </div>
+
+                <div class="form-group">
+                    <label for="apellido_editar">
+                        Apellido <span style="color: #ef4444;">*</span>
+                    </label>
+                    <input type="text" id="apellido_editar" name="apellido"
+                        required
+                        maxlength="100"
+                        placeholder="Apellido del asesor">
+                </div>
+
+                <div class="form-group">
                     <label for="telefono_editar">
-                        Teléfono <span style="color: #6B7280; font-weight: normal;">(Opcional - dejar vacío para eliminar)</span>
+                        Teléfono <span style="color: #6B7280; font-weight: normal;">(Opcional)</span>
                     </label>
                     <input type="tel" id="telefono_editar" name="telefono"
                         maxlength="20"
@@ -309,7 +329,7 @@ $paginaSiguiente = min($total_paginas, $pagina_actual + 1);
 
             <div class="modal-buttons">
                 <button type="submit" class="btn btn-primary">
-                    💾 Actualizar Teléfono
+                    💾 Actualizar Asesor
                 </button>
                 <button type="button" class="btn btn-secondary" onclick="cerrarModalEditar()">
                     ❌ Cancelar
@@ -318,7 +338,6 @@ $paginaSiguiente = min($total_paginas, $pagina_actual + 1);
         </form>
     </div>
 </div>
-
 <!-- MODAL ELIMINAR -->
 <div id="modalEliminar" class="modal">
     <div class="modal-content">
@@ -376,14 +395,12 @@ function cerrarModalCrear() {
 
 // ========== MODAL EDITAR ==========
 function abrirModalEditar(id, nombre, apellido, telefono) {
-    document.getElementById('modalEditar').style.display = 'flex';
     document.getElementById('id_asesor_editar').value = id;
+    document.getElementById('nombre_editar').value = nombre;
+    document.getElementById('apellido_editar').value = apellido;
     document.getElementById('telefono_editar').value = telefono || '';
-    document.getElementById('infoAsesor').innerHTML = `
-        <strong>Nombre:</strong> ${nombre}<br>
-        <strong>Apellido:</strong> ${apellido}
-    `;
-    document.getElementById('telefono_editar').focus();
+    document.getElementById('infoAsesor').textContent = id;
+    document.getElementById('modalEditar').style.display = 'flex';
 }
 
 function cerrarModalEditar() {

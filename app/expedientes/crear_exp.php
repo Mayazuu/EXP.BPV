@@ -1,6 +1,6 @@
 <?php
+include('../session_config.php');
 include('../conexion.php');
-session_start();
 
 if (!isset($_SESSION['id_usuario']) || !in_array($_SESSION['rol'], ['Secretaria', 'Directora'])) {
     session_destroy();
@@ -34,22 +34,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             throw new Exception("❌ La ficha social '$ficha_social' ya está registrada. Debe ser única.");
         }
 
-        // ===== VALIDACIÓN: NÚMERO DE CASO ÚNICO POR AÑO =====
-        $stmt = $conn->prepare("SELECT COUNT(*) FROM expedientes WHERE numero_caso = ? AND anio = ?");
-        $stmt->execute([$numero_caso, $anio]);
-        if ($stmt->fetchColumn() > 0) {
-            throw new Exception("❌ El número de caso '$numero_caso' ya existe para el año $anio.");
-        }
-
-        if (isset($_POST['numero_caso'])) {
+        if (isset($_POST['numero_caso']) && !empty(trim($_POST['numero_caso']))) {
             $numero_caso = trim($_POST['numero_caso']);
             
-            // Validar que no esté vacío
-            if (empty($numero_caso)) {
-                $error = "El número de caso es obligatorio";
-            }
             // Validar que sea numérico
-            elseif (!is_numeric($numero_caso)) {
+            if (!is_numeric($numero_caso)) {
                 $error = "El número de caso debe ser un número";
             }
             // Validar que sea entero positivo
@@ -63,6 +52,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             else {
                 // Validación exitosa
                 $numero_caso = (int)$numero_caso;
+            }
+        } else {
+            // Si está vacío, asignar NULL
+            $numero_caso = null;
+        }
+
+// Validar que no exista el mismo número de caso en el mismo año (solo si se ingresó)
+        if ($numero_caso !== null) {
+            $stmt_check = $conn->prepare("SELECT COUNT(*) FROM expedientes 
+                                        WHERE numero_caso = ? AND YEAR(anio) = ?");
+            $stmt_check->execute([$numero_caso, $anio]);
+            if ($stmt_check->fetchColumn() > 0) {
+                $error = "Ya existe un expediente con ese número en el año $anio";
             }
         }
 
@@ -275,12 +277,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Consultas para selects
 $estudiantes = $conn->query("SELECT id_estudiante, dpi_estudiante, nombre, apellido, carnetEstudiantil, est.estado 
-                            FROM estudiantes e 
-                            INNER JOIN estados est ON e.id_estado = est.id_estado 
+                            FROM estudiantes e
+                            INNER JOIN estados est ON e.id_estado = est.id_estado
                             ORDER BY e.id_estado DESC, e.nombre, e.apellido")->fetchAll(PDO::FETCH_ASSOC);
 
-$interesados = $conn->query("SELECT id_interesado, dpi_interesado, nombre, apellido 
-                            FROM interesados 
+$interesados = $conn->query("SELECT id_interesado, dpi_interesado, nombre, apellido
+                            FROM interesados
                             ORDER BY nombre, apellido")->fetchAll(PDO::FETCH_ASSOC);
 
 $asesores = $conn->query("SELECT id_asesor, nombre, apellido 
@@ -320,6 +322,7 @@ $areas = $conn->query("SELECT id_area, area
     <title>Crear Expediente - Bufete Popular</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="styleExp.css">
+
     <!-- Select2 para búsqueda mejorada -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -354,9 +357,10 @@ $areas = $conn->query("SELECT id_area, area
                 </div>
 
                 <div>
-                    <label class="form-label campo-obligatorio">Número de Caso</label>
-                    <input type="number" name="numero_caso" id="numero-caso" class="form-input" 
-                        value="<?= htmlspecialchars($_POST['numero_caso'] ?? '') ?>" min="1" step="1" pattern="[0-9]+"oninput="validarNumeroCaso(this)"required>
+                    <label class="form-label">Número de caso en el año <span style="color: #6B7280; font-weight: normal;"></span></label>
+                    <input type="text" name="numero_caso" id="numero-caso" class="form-input" 
+                        value="<?= htmlspecialchars($_POST['numero_caso'] ?? '') ?>" 
+                        placeholder="Dejar vacío si no aplica">
                 </div>
 
                 <div>
@@ -464,9 +468,9 @@ $areas = $conn->query("SELECT id_area, area
                         <option value="otro">➕ Agregar Nuevo Juzgado</option>
                     </select>
                     <input type="text" id="nuevo-juzgado" name="nuevo_nombre_juzgado" 
-                           class="form-input otro" placeholder="Nombre del nuevo juzgado" style="display: none;">
+                        class="form-input otro" placeholder="Nombre del nuevo juzgado" style="display: none;">
                 </div>
-                
+
                 <div>
                     <label class="form-label campo-obligatorio">Tipo de Expediente</label>
                     <select name="id_tipo_exp" id="select-tipo" class="form-input" required>
@@ -480,7 +484,7 @@ $areas = $conn->query("SELECT id_area, area
                         <option value="otro">➕ Agregar Nuevo Tipo</option>
                     </select>
                     <input type="text" id="nuevo-tipo" name="nuevo_nombre_tipo" 
-                           class="form-input otro" placeholder="Nombre del nuevo tipo de caso" style="display: none;">
+                        class="form-input otro" placeholder="Nombre del nuevo tipo de caso" style="display: none;">
                     <select name="nuevo_id_area" id="nueva-area" class="form-input otro" style="display: none;">
                         <option value="">-- Seleccionar Área Legal --</option>
                         <?php foreach($areas as $area): ?>
@@ -494,25 +498,25 @@ $areas = $conn->query("SELECT id_area, area
                 <div>
                     <label class="form-label campo-obligatorio">Fecha de Inicio</label>
                     <input type="date" name="fecha_inicio" class="form-input" required
-                           value="<?= htmlspecialchars($_POST['fecha_inicio'] ?? date('Y-m-d')) ?>">
+                        value="<?= htmlspecialchars($_POST['fecha_inicio'] ?? date('Y-m-d')) ?>">
                 </div>
 
                 <div>
                     <label class="form-label campo-opcional">Fecha Audiencia 1</label>
                     <input type="date" name="fecha_audiencia1" class="form-input"
-                           value="<?= htmlspecialchars($_POST['fecha_audiencia1'] ?? '') ?>">
+                        value="<?= htmlspecialchars($_POST['fecha_audiencia1'] ?? '') ?>">
                 </div>
 
                 <div>
                     <label class="form-label campo-opcional">Fecha Audiencia 2</label>
                     <input type="date" name="fecha_audiencia2" class="form-input"
-                           value="<?= htmlspecialchars($_POST['fecha_audiencia2'] ?? '') ?>">
+                        value="<?= htmlspecialchars($_POST['fecha_audiencia2'] ?? '') ?>">
                 </div>
 
                 <div>
                     <label class="form-label campo-opcional">Fecha de Finalización</label>
                     <input type="date" name="fecha_finalizacion" class="form-input"
-                           value="<?= htmlspecialchars($_POST['fecha_finalizacion'] ?? '') ?>">
+                        value="<?= htmlspecialchars($_POST['fecha_finalizacion'] ?? '') ?>">
                 </div>
 
                 <div>
@@ -530,13 +534,6 @@ $areas = $conn->query("SELECT id_area, area
                     <input type="number" id="nuevo-estante" name="nuevo_numero_estante" class="form-input otro" placeholder="Número del nuevo estante" style="display: none;"min="1"step="1"pattern="[0-9]+"
                         oninput="validarEstante(this)">
                 </div>
-
-                <div>
-                    <label class="form-label campo-opcional">Observaciones</label>
-                    <textarea name="observaciones" class="form-input" rows="4"><?= htmlspecialchars($_POST['observaciones'] ?? '') ?></textarea>
-                </div>
-            </div>
-
 
                 <div>
                     <label class="form-label campo-opcional">Observaciones</label>
@@ -571,11 +568,11 @@ $areas = $conn->query("SELECT id_area, area
                 <input type="text" id="est_apellido" required>
             </div>
             <div class="modal-form-group">
-                <label>DPI <span class="campo-opcional-modal">(Opcional)</span></label>
+                <label>DPI <span class="campo-opcional-modal"></span></label>
                 <input type="text" id="est_dpi" maxlength="13" pattern="[0-9]{13}">
             </div>
             <div class="modal-form-group">
-                <label>Carnet Estudiantil <span class="campo-opcional-modal">(Opcional)</span></label>
+                <label>Carnet Estudiantil <span class="campo-opcional-modal"></span></label>
                 <input type="text" id="est_carnet">
             </div>
             <div class="modal-form-group">
@@ -607,6 +604,7 @@ $areas = $conn->query("SELECT id_area, area
     </div>
 </div>
 
+<!-- MODAL: AGREGAR INTERESADO -->
 <div id="modalInteresado" class="modal-overlay">
     <div class="modal-box">
         <div class="modal-header">
@@ -623,28 +621,28 @@ $areas = $conn->query("SELECT id_area, area
                 <label>Apellido *</label>
                 <input type="text" id="int_apellido" required>
             </div>
-            
+
             <div class="modal-form-group">
                 <label>DPI/Cédula</label>
                 <input type="text" id="int_dpi" maxlength="13"
-                       oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                       placeholder="Ej: 2345678901234 o 12345678">
+                    oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                    placeholder="Ej: 2345678901234 o 12345678">
                 <small style="color: #6B7280; display: block; margin-top: 4px;">
                     8 a 13 dígitos (para cédulas antiguas o DPI nuevo)
                 </small>
             </div>
-            
+
             <div class="modal-form-group">
                 <label>Teléfono <span class="campo-opcional-modal">(Opcional)</span></label>
                 <input type="text" id="int_telefono" placeholder="Ej: 1234-5678">
             </div>
-            
+
             <div class="modal-form-group">
                 <label>Dirección Exacta *</label>
                 <textarea id="int_direccion" rows="3" required 
-                          placeholder="Ej: 5ta calle 3-25 zona 1"></textarea>
+                        placeholder="Ej: 5ta calle 3-25 zona 1"></textarea>
             </div>
-            
+
             <div class="modal-form-group">
                 <label>Municipio *</label>
                 <select id="int_lugar" required onchange="toggleOtroLugar()">
@@ -658,20 +656,20 @@ $areas = $conn->query("SELECT id_area, area
                     <option value="otros">➕ Otro municipio...</option>
                 </select>
             </div>
-            
+
             <!-- CAMPO DE NUEVO MUNICIPIO -->
             <div id="otroLugarDiv" style="display: none; margin-top: 16px; padding: 16px; background: #F3F4F6; border-radius: 8px; border: 2px solid #3B82F6;">
                 <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #1F2937;">
                     📍 Nombre del nuevo municipio *
                 </label>
                 <input type="text" id="int_otro_lugar" 
-                       style="width: 100%; padding: 12px; border: 2px solid #E5E7EB; border-radius: 8px; font-size: 14px;" 
-                       placeholder="Ej: Esquipulas, Chiquimula">
+                    tyle="width: 100%; padding: 12px; border: 2px solid #E5E7EB; border-radius: 8px; font-size: 14px;" 
+                    placeholder="Ej: Esquipulas, Chiquimula">
                 <small style="color: #6B7280; display: block; margin-top: 8px;">
                     💡 Este municipio se agregará automáticamente a la lista
                 </small>
             </div>
-            
+
             <div class="modal-buttons">
                 <button type="submit" class="btn-modal-submit">💾 Guardar Cliente</button>
                 <button type="button" class="btn-modal-cancel" onclick="cerrarModalInteresado()">Cancelar</button>
@@ -738,22 +736,21 @@ $(document).ready(function() {
             if ($.trim(params.term) === '') {
                 return data;
             }
-            
+
             // No buscar en la opción "Agregar nuevo"
             if (data.id === 'otro') {
                 return data;
             }
-            
             // Buscar en el texto y en el atributo data-area
             const searchTerm = params.term.toLowerCase();
             const text = data.text.toLowerCase();
             const area = $(data.element).data('area');
             const areaText = area ? area.toString().toLowerCase() : '';
-            
+
             if (text.indexOf(searchTerm) > -1 || areaText.indexOf(searchTerm) > -1) {
                 return data;
             }
-            
+
             return null;
         },
         language: {

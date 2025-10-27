@@ -1,6 +1,6 @@
 <?php
+include('../session_config.php');
 include('../conexion.php');
-session_start();
 
 if (!isset($_SESSION['id_usuario']) || !in_array($_SESSION['rol'], ['Secretaria', 'Directora'])) {
     session_destroy();

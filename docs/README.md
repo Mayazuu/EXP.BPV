@@ -25,26 +25,7 @@ Digitalizar y optimizar los procesos administrativos del Bufete Popular, proporc
 - **Backend:** PHP 8.2
 - **Base de Datos:** MariaDB 11
 - **Servidor Web:** Apache 2.4
-- **Contenedores:** Docker & Docker Compose
 
-### Infraestructura CI/CD
-
-- **Jenkins:** Integración y despliegue continuo
-- **Dependency-Track:** Análisis de vulnerabilidades
-- **Pandoc:** Generación automática de documentación
-- **Syft:** Generación de SBOM (Software Bill of Materials)
-
-## 📦 Componentes Docker
-
-El sistema está compuesto por 5 contenedores:
-
-| Contenedor | Imagen | Puerto | Función |
-|------------|--------|--------|---------|
-| `bufete_web` | bufete-web | 8080 | Aplicación PHP |
-| `bufete_db` | mariadb:11 | 3307 | Base de datos |
-| `bufete_jenkins` | jenkins/jenkins:lts | 8081 | CI/CD |
-| `bufete_dependency_track` | dependencytrack/bundled | 8082 | Seguridad |
-| `bufete_pandoc` | pandoc/latex | - | Documentación |
 
 ## 🚀 Módulos del Sistema
 
@@ -128,7 +109,7 @@ El sistema está compuesto por 5 contenedores:
 - ✅ Contraseñas hasheadas
 - ✅ Análisis continuo con Dependency-Track
 
-## 📥 Instalación
+## 📥 Instalación con DOCKER
 
 ### Requisitos Previos
 
@@ -213,29 +194,6 @@ $database = "bufete_popular";
 6. **Seguimiento**
    - Actualizar estados y generar reportes
 
-## 📊 Pipeline CI/CD
-
-### Stages del Pipeline
-
-1. **📥 Checkout** - Clona código desde GitHub
-2. **📦 Install Dependencies** - Instala dependencias (Composer/NPM)
-3. **🧪 Run Tests** - Ejecuta tests automatizados
-4. **📚 Generate Documentation** - Genera PDF con Pandoc
-5. **🔒 SBOM Generation** - Genera y envía SBOM a Dependency-Track
-6. **🐳 Build Docker Image** - Construye imagen Docker
-7. **🚀 Deploy Verification** - Verifica despliegue
-
-### Ejecución Manual del Pipeline
-```bash
-# Desde Jenkins UI
-# http://localhost:8081 → bufete-popular-pipeline → Build Now
-```
-
-### Ejecución Automática
-
-El pipeline se ejecuta automáticamente:
-- ✅ Cada 5 minutos (polling de GitHub)
-- ✅ En cada push a master (con webhook configurado)
 
 ## 🛠️ Mantenimiento
 
@@ -343,11 +301,6 @@ Para contribuir al proyecto:
 4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
 5. Crear Pull Request
 
-## 📞 Soporte
-
-Para reportar bugs o solicitar features:
-- **Issues**: https://github.com/Mayazuu/Proyecto-Practica/issues
-- **Email**: soporte@bufetepopular.edu.gt
 
 ## 🔄 Changelog
 

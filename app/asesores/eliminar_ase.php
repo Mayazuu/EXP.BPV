@@ -1,5 +1,5 @@
 <?php
-session_start();
+include('../session_config.php');
 include('../conexion.php');
 
 // Validar sesión y rol de Directora

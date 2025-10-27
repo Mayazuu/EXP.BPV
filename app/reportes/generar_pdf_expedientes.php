@@ -70,10 +70,10 @@ if (isset($_POST['filtro_tipo_caso']) && !empty($_POST['id_tipo_exp'])) {
     $id_tipo_caso = $_POST['id_tipo_exp'];
     $sql_where .= " AND e.id_tipo_exp = ?";
     $params[] = $id_tipo_caso;
-    $stmt = $conn->prepare("SELECT tc.caso, a.area FROM tipo_caso tc INNER JOIN areas a ON tc.id_area = a.id_area WHERE tc.id_tipo_exp = ?");
+    $stmt = $conn->prepare("SELECT caso FROM tipo_caso WHERE id_tipo_exp = ?");
     $stmt->execute([$id_tipo_caso]);
-    $tipo_data = $stmt->fetch(PDO::FETCH_ASSOC);
-    $filtros_aplicados[] = "Tipo: {$tipo_data['area']} - {$tipo_data['caso']}";
+    $tipo_nombre = $stmt->fetchColumn();
+    $filtros_aplicados[] = "Tipo: $tipo_nombre";
 }
 
 // Filtro por estado
@@ -250,7 +250,6 @@ $pdf->Cell(0, 8, 'Total de expedientes: ' . count($expedientes), 0, 1);
 
 // Salida del PDF
 $pdf->Output('I', 'Reporte_Expedientes_' . date('Y-m-d') . '.pdf');
-?>
 
 // Total de registros
 $pdf->Ln(5);

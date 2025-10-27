@@ -153,8 +153,10 @@ $estudiantes_activos = $conn->query("
     SELECT e.id_estudiante, e.dpi_estudiante, e.carnetEstudiantil, e.nombre, e.apellido
     FROM estudiantes e
     WHERE e.id_estado = 1
-    AND e.dpi_estudiante IS NOT NULL
-    AND e.dpi_estudiante != ''
+    AND (
+        (e.dpi_estudiante IS NOT NULL AND e.dpi_estudiante != '')
+        OR (e.carnetEstudiantil IS NOT NULL AND e.carnetEstudiantil != '')
+    )
     ORDER BY e.nombre, e.apellido
 ")->fetchAll(PDO::FETCH_ASSOC);
 
@@ -164,14 +166,13 @@ $expedientes_disponibles = $conn->query("
     INNER JOIN tipo_caso tc ON e.id_tipo_exp = tc.id_tipo_exp
     INNER JOIN areas a ON tc.id_area = a.id_area
     INNER JOIN interesados i ON e.id_interesado = i.id_interesado
-    WHERE a.area LIKE '%familia%'
-    AND tc.caso LIKE '%ejecutivo%'
-    AND e.id_expediente NOT IN (
+    WHERE e.id_expediente NOT IN (
         SELECT id_expediente FROM prestamos WHERE id_estado_prest IN (1,2)
     )
     ORDER BY e.id_expediente DESC
 ")->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -435,7 +436,7 @@ $expedientes_disponibles = $conn->query("
         <form id="formCrear" method="POST" action="crear_pres.php">
             <div class="modal-body">
                 <div class="info-box">
-                    <strong>📋 Importante:</strong> Solo se pueden prestar expedientes EJECUTIVOS del área de Familia a estudiantes activos con DPI.
+                    <strong>📋 Importante:</strong> Solo se pueden prestar expedientes a estudiantes activos con DPI o Carnet Estudiantil.
                 </div>
 
                 <div class="form-row">
@@ -451,7 +452,7 @@ $expedientes_disponibles = $conn->query("
                                 </option>
                             <?php endforeach; ?>
                         </select>
-                        <small>ℹ️ Solo estudiantes activos con DPI</small>
+                        <small>ℹ️ Solo estudiantes activos con DPI o Carnet</small>
                         <div class="margen-top-10">
                             <a href="../estudiantes/crear_est.php" target="_blank" class="link_registrar">
                                 ➕ Registrar nuevo estudiante
@@ -470,7 +471,7 @@ $expedientes_disponibles = $conn->query("
                                 </option>
                             <?php endforeach; ?>
                         </select>
-                        <small>ℹ️ Solo expedientes ejecutivos de Familia disponibles</small>
+                        <small>ℹ️ Expedientes disponibles para prestamos</small>
                         <div class="margen-top-10">
                             <a href="../expedientes/crear_exp.php" target="_blank" class="link_registrar">
                                 ➕ Registrar nuevo expediente

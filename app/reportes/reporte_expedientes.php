@@ -96,7 +96,7 @@ $estudiantes = $conn->query("SELECT dpi_estudiante, CONCAT(nombre, ' ', apellido
                             <option value="">Seleccione un tipo</option>
                             <?php foreach($tipos_caso as $tipo): ?>
                                 <option value="<?= $tipo['id_tipo_exp'] ?>">
-                                    <?= htmlspecialchars($tipo['area']) ?> - <?= htmlspecialchars($tipo['caso']) ?>
+                                    <?= htmlspecialchars($tipo['caso']) ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
