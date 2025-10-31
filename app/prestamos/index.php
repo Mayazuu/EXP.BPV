@@ -33,7 +33,7 @@ $inicio = ($pagina - 1) * $por_pagina;
 
 // --- Consulta principal con filtros ---
 $sql = "
-SELECT 
+SELECT
     p.id_prestamo,
     p.id_expediente,
     p.id_estudiante,
@@ -672,7 +672,7 @@ function verDetalles(prestamo) {
                     (prestamo.id_estado_prest == 2 ? 'vencido' : 'devuelto');
     document.getElementById('det_estado').innerHTML =
         `<span class="estado-badge-detalle ${estadoClass}">${prestamo.estado_prestamo}</span>`;
-    
+
     document.getElementById('det_estudiante').textContent =
         prestamo.nombre_estudiante + ' ' + prestamo.apellido_estudiante;
     

@@ -91,7 +91,7 @@ try {
 
     // ===== REGISTRAR EN TRANSACCIONES =====
     $ip = $_SERVER['REMOTE_ADDR'];
-    
+
     // Construir identificación del estudiante (DPI y/o Carnet)
     $identificacion = [];
     if (!empty($estudiante['dpi_estudiante'])) {
@@ -101,7 +101,7 @@ try {
         $identificacion[] = "Carnet: {$estudiante['carnetEstudiantil']}";
     }
     $identificacion_str = implode(', ', $identificacion);
-    
+
     $descripcion = "Registro de préstamo ID: $id_prestamo - Expediente: $id_expediente ({$expediente['ficha_social']}), Estudiante: {$estudiante['nombre']} {$estudiante['apellido']} (ID: $id_estudiante, $identificacion_str)";
 
     $stmt = $conn->prepare("

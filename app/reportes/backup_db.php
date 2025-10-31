@@ -31,30 +31,30 @@ if (!isset($_SESSION['id_usuario']) || $_SESSION['rol'] !== 'Directora') {
 // Función para exportar tabla a SQL
 function exportarTabla($conn, $tabla) {
     $sql = "";
-    
+
     // Obtener estructura de la tabla
     $sql .= "\n-- --------------------------------------------------------\n";
     $sql .= "-- Estructura de tabla para `$tabla`\n";
     $sql .= "-- --------------------------------------------------------\n\n";
-    
+
     $sql .= "DROP TABLE IF EXISTS `$tabla`;\n";
-    
+
     $stmt = $conn->query("SHOW CREATE TABLE `$tabla`");
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     $sql .= $row['Create Table'] . ";\n\n";
-    
+
     // Obtener datos de la tabla
     $stmt = $conn->query("SELECT * FROM `$tabla`");
     $numRows = $stmt->rowCount();
-    
+
     if ($numRows > 0) {
         $sql .= "-- --------------------------------------------------------\n";
         $sql .= "-- Volcado de datos para la tabla `$tabla`\n";
         $sql .= "-- --------------------------------------------------------\n\n";
-        
+
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $sql .= "INSERT INTO `$tabla` VALUES (";
-            
+
             $values = array();
             foreach ($row as $value) {
                 if ($value === null) {
@@ -63,14 +63,14 @@ function exportarTabla($conn, $tabla) {
                     $values[] = "'" . addslashes($value) . "'";
                 }
             }
-            
+
             $sql .= implode(", ", $values);
             $sql .= ");\n";
         }
-        
+
         $sql .= "\n";
     }
-    
+
     return $sql;
 }
 

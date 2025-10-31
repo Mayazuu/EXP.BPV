@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // ═══════════════════════════════════════════════════════════
             try {
                 $log = $conn->prepare("
-                    INSERT INTO inicios_fallidos 
+                    INSERT INTO inicios_fallidos
                     (id_usuario, usuario_ingresado, fecha_hora, ip)
                     VALUES (:id_usuario, :usuario_ingresado, :fecha_hora, :ip)
                 ");
@@ -71,11 +71,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // ═══════════════════════════════════════════════════════════
         try {
             $log = $conn->prepare("
-                INSERT INTO inicios_fallidos 
+                INSERT INTO inicios_fallidos
                 (id_usuario, usuario_ingresado, fecha_hora, ip)
                 VALUES (NULL, :usuario_ingresado, :fecha_hora, :ip)
             ");
-            $log->bindParam(':usuario_ingresado', $usuario_ingresado);  
+            $log->bindParam(':usuario_ingresado', $usuario_ingresado);
             $log->bindParam(':fecha_hora', $fecha_hora);
             $log->bindParam(':ip', $ip);
             $log->execute();

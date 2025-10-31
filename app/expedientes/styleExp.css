@@ -1,7 +1,3 @@
-/* ==========================================
-   MÓDULO EXPEDIENTES
-   ========================================== */
-
 /* ================= VARIABLES ================= */
 :root {
     --primary: #5368a1;
@@ -59,20 +55,20 @@ main {flex: 1; /* Ocupa el espacio disponible */display: block;padding: 3rem 2re
 }
 
 .search-input:focus, .form-input:focus, .form-select:focus, .editar-input:focus, .editar-select:focus, .select2-container--default.select2-container--focus .select2-selection--single { 
-    outline:none; 
-    border-color:var(--primary); 
+    outline:none;
+    border-color:var(--primary);
 }
 
 /* ================= BOTONES ================= */
-.btn, .form-btn, .editar-btn, .page-btn { 
-    cursor:pointer; 
-    font-weight:600; 
-    transition:all 0.2s; 
-    display:inline-flex; 
-    align-items:center; 
-    justify-content:center; 
-    text-decoration:none; 
-    border-radius:8px; 
+.btn, .form-btn, .editar-btn, .page-btn {
+    cursor:pointer;
+    font-weight:600;
+    transition:all 0.2s;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    border-radius:8px;
     text-align:center;
     border:none; /* Importante */
     padding:0.75rem 1.5rem; /* Añadido */
@@ -210,10 +206,7 @@ textarea.form-input {
     line-height: 1.5;
 }
 
-.otro {
-    display: none;
-    margin-top: 0.5rem;
-}
+.otro {display: none;margin-top: 0.5rem;}
 
 /* BOTONES DEL FORMULARIO - CENTRADOS */
 .form-buttons {
@@ -237,37 +230,37 @@ textarea.form-input {
 }
 
 /* ================= MODALES================= */
-.modal { 
-    display:none; 
-    position:fixed; 
-    top:0; 
-    left:0; 
-    width:100%; 
-    height:100%; 
-    overflow:auto; 
-    background:rgba(0,0,0,0.5); 
-    z-index:9999; 
-    align-items:center; 
-    justify-content:center; 
+.modal {
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    overflow:auto;
+    background:rgba(0,0,0,0.5);
+    z-index:9999;
+    align-items:center;
+    justify-content:center;
     animation:fadeIn 0.2s;
     padding:1rem;
 }
 
-.modal-content { 
-    background:var(--white); 
-    border-radius:12px; 
-    max-width:600px; 
-    width:90%; 
-    max-height:90vh; 
-    overflow-y:auto; 
-    box-shadow:0 20px 40px rgba(0,0,0,0.3); 
+.modal-content {
+    background:var(--white);
+    border-radius:12px;
+    max-width:600px;
+    width:90%;
+    max-height:90vh;
+    overflow-y:auto;
+    box-shadow:0 20px 40px rgba(0,0,0,0.3);
     animation:slideUp 0.3s;
 }
 
 .modal-large { max-width:900px;}
 
 .modal-header {
-    background:linear-gradient(135deg,var(--primary),var(--secondary)); 
+    background:linear-gradient(135deg,var(--primary),var(--secondary));
     color:var(--white);
     padding:1.5rem;
     border-radius:12px 12px 0 0;
@@ -279,15 +272,15 @@ textarea.form-input {
 .modal-header h2,
 .modal-header h3 { margin:0; font-size:1.5rem;}
 
-.modal-close { 
-    font-size:1.75rem; 
-    cursor:pointer; 
-    color:var(--white); 
-    opacity:.8; 
-    transition:opacity .2s; 
-    background:none; 
-    border:none; 
-    padding:0; 
+.modal-close {
+    font-size:1.75rem;
+    cursor:pointer;
+    color:var(--white);
+    opacity:.8;
+    transition:opacity .2s;
+    background:none;
+    border:none;
+    padding:0;
     line-height:1;
     width:30px;
     height:30px;
@@ -297,15 +290,10 @@ textarea.form-input {
 }
 
 .modal-close:hover {opacity:1;}
-
 .modal-body {padding:1.5rem;color:#374151;line-height:1.6;}
 
 /* Estilos específicos para formulario dentro del modal */
-.modal-body form {
-    display:flex;
-    flex-direction:column;
-    gap:1rem;
-}
+.modal-body form {display:flex;flex-direction:column;gap:1rem;}
 
 .modal-body label {
     font-weight:600;
@@ -343,12 +331,7 @@ textarea.form-input {
     line-height:1.8;
 }
 
-.modal-buttons { 
-    display:flex; 
-    gap:1rem; 
-    padding:1.5rem;
-    border-top:1px solid #E5E7EB;
-}
+.modal-buttons { display:flex;gap:1rem;padding:1.5rem;border-top:1px solid #E5E7EB;}
 
 .modal-buttons .btn { flex:1;}
 
@@ -375,27 +358,11 @@ textarea.form-input {
     color:#374151;
 }
 
-.select2-container--default .select2-selection--single .select2-selection__placeholder {
-    color:#9CA3AF;
-}
-
-.select2-container--default .select2-selection--single .select2-selection__arrow{
-    height:43px;
-    right:8px;
-}
-
-.select2-container--default.select2-container--focus .select2-selection--single {
-    border-color:var(--primary);
-}
-
-.select2-dropdown{
-    border:2px solid var(--primary);
-    border-radius:8px;
-    margin-top:4px;
-}
-
+.select2-container--default .select2-selection--single .select2-selection__placeholder {color:#9CA3AF;}
+.select2-container--default .select2-selection--single .select2-selection__arrow{ height:43px;right:8px;}
+.select2-container--default.select2-container--focus .select2-selection--single {border-color:var(--primary);}
+.select2-dropdown{ border:2px solid var(--primary);border-radius:8px;margin-top:4px;}
 .select2-results__option{padding:0.75rem 1rem;}
-
 .select2-results__option--highlighted[aria-selected]{
     background-color:var(--primary)!important;
     color:white;
@@ -414,11 +381,7 @@ textarea.form-input {
     transition: all 0.3s;
 }
 
-.btn-modal-agregar:hover {
-    background: #059669;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-}
+.btn-modal-agregar:hover {background: #059669;transform: translateY(-2px);box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);}
 
 /* Modales */
 .modal-overlay {
@@ -435,9 +398,7 @@ textarea.form-input {
     backdrop-filter: blur(4px);
 }
 
-.modal-overlay.active {
-    display: flex;
-}
+.modal-overlay.active {display: flex;}
 
 .modal-box {
     background: white;
@@ -452,14 +413,8 @@ textarea.form-input {
 }
 
 @keyframes modalSlideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from {opacity: 0;transform: translateY(-50px);}
+    to {opacity: 1;transform: translateY(0);}
 }
 
 .modal-header {
@@ -471,11 +426,7 @@ textarea.form-input {
     border-bottom: 2px solid #E5E7EB;
 }
 
-.modal-header h3 {
-    color: #1F2937;
-    font-size: 24px;
-    margin: 0;
-}
+.modal-header h3 {color: #1F2937;font-size: 24px;margin: 0;}
 
 .modal-close {
     background: #EF4444;
@@ -492,14 +443,9 @@ textarea.form-input {
     transition: all 0.3s;
 }
 
-.modal-close:hover {
-    background: #DC2626;
-    transform: rotate(90deg);
-}
+.modal-close:hover {background: #DC2626;transform: rotate(90deg);}
 
-.modal-form-group {
-    margin-bottom: 20px;
-}
+.modal-form-group {margin-bottom: 20px;}
 
 .modal-form-group label {
     display: block;
@@ -527,12 +473,7 @@ textarea.form-input {
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-.modal-buttons {
-    display: flex;
-    gap: 12px;
-    margin-top: 24px;
-    justify-content: flex-end;
-}
+.modal-buttons {display: flex;gap: 12px;margin-top: 24px;justify-content: flex-end;}
 
 .btn-modal-submit {
     background: #3B82F6;
@@ -545,10 +486,7 @@ textarea.form-input {
     transition: all 0.3s;
 }
 
-.btn-modal-submit:hover {
-    background: #2563EB;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+.btn-modal-submit:hover {background: #2563EB;transform: translateY(-2px);box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
 .btn-modal-cancel {
@@ -562,19 +500,9 @@ textarea.form-input {
     transition: all 0.3s;
 }
 
-.btn-modal-cancel:hover {
-    background: #4B5563;
-}
-
-.campo-opcional-modal {
-    color: #6B7280;
-    font-size: 12px;
-}
-
-.loading {
-    opacity: 0.6;
-    pointer-events: none;
-}
+.btn-modal-cancel:hover {background: #4B5563;}
+.campo-opcional-modal {color: #6B7280; font-size: 12px;}
+.loading {opacity: 0.6;pointer-events: none;}
 
 /* ================= FIX ESPECÍFICO PARA BOTONES DEL FORMULARIO ================= */
 .form-container .form-buttons,

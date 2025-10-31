@@ -473,6 +473,7 @@ function validarTelefono(telefono) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+
     // ========== VALIDACIÓN SOLO NÚMEROS EN TIEMPO REAL ==========
     const telefonoInputs = [
         document.getElementById('telefono_crear'),

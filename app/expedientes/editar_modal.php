@@ -16,10 +16,10 @@ if (empty($id_expediente)) {
 // ===== PROCESAR ACTUALIZACIÓN (POST) =====
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Content-Type: application/json');
-    
+
     // Obtener el ID desde POST
     $id_expediente = $_POST['id_expediente'] ?? '';
-    
+
     if (empty($id_expediente)) {
         echo json_encode(['error' => 'ID de expediente no especificado']);
         exit();
@@ -42,11 +42,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (empty($nuevo_numero_estante)) {
                 throw new Exception("Debe ingresar un número de estante.");
             }
-            
+
             $stmt = $conn->prepare("SELECT id_estante FROM estantes WHERE estante = ?");
             $stmt->execute([$nuevo_numero_estante]);
             $estanteExistente = $stmt->fetch(PDO::FETCH_ASSOC);
-            
+
             if ($estanteExistente) {
                 $id_estante = $estanteExistente['id_estante'];
             } else {
@@ -73,15 +73,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Actualizar expediente
         $stmt = $conn->prepare("
-            UPDATE expedientes 
-            SET id_estado_exp = ?, 
-                id_juzgado = ?, 
-                folios = ?, 
-                id_estante = ?, 
+            UPDATE expedientes
+            SET id_estado_exp = ?,
+                id_juzgado = ?,
+                folios = ?,
+                id_estante = ?,
                 observaciones = ?
             WHERE id_expediente = ?
         ");
-        
+
         $stmt->execute([
             $id_estado_exp,
             $id_juzgado,
@@ -127,7 +127,7 @@ try {
     ");
     $stmt->execute([$id_expediente]);
     $expediente = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+
     if (!$expediente) {
         echo json_encode(['error' => 'Expediente no encontrado']);
         exit();
@@ -248,12 +248,6 @@ document.getElementById('formEditarModal').addEventListener('submit', function(e
     e.preventDefault();
     const formData = new FormData(this);
 
-    // DEBUG: Ver qué datos se están enviando
-    console.log('Enviando datos:');
-    for (let pair of formData.entries()) {
-        console.log(pair[0] + ': ' + pair[1]);
-    }
-
     // Deshabilitar botón mientras procesa
     const submitBtn = this.querySelector('button[type="submit"]');
     const originalText = submitBtn.innerHTML;
@@ -271,7 +265,7 @@ document.getElementById('formEditarModal').addEventListener('submit', function(e
     })
     .then(text => {
         console.log('Response text:', text);
-        
+
         // Intentar parsear como JSON
         let data;
         try {
@@ -280,11 +274,10 @@ document.getElementById('formEditarModal').addEventListener('submit', function(e
             console.error('Error parseando JSON:', e);
             throw new Error('Respuesta no es JSON válido: ' + text.substring(0, 200));
         }
-        
         const msgDiv = document.getElementById('editarModalMensaje');
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalText;
-        
+
         if (data.error) {
             msgDiv.innerHTML = '<div class="alert alert-error">❌ '+data.error+'</div>';
         } else if (data.success) {

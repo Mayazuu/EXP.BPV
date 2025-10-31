@@ -208,7 +208,7 @@ document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
     checkbox.addEventListener('change', function() {
         const detalleId = 'detalle_' + this.id.replace('filtro_', '');
         const elemento = document.getElementById(detalleId);
-        
+
         if (elemento) {
             if (this.checked) {
                 elemento.classList.remove('oculto');
@@ -229,18 +229,18 @@ if (inputBusqueda) {
         const busqueda = this.value.toLowerCase().trim();
         const items = document.querySelectorAll('.estudiante-item');
         let encontrados = 0;
-        
+
         if (busqueda === '') {
             items.forEach(item => item.style.display = 'block');
             listaEstudiantes.classList.remove('oculto');
             noResultados.classList.add('oculto');
             return;
         }
-        
+
         items.forEach(item => {
             const nombre = item.getAttribute('data-nombre');
             const dpi = item.getAttribute('data-dpi');
-            
+
             if (nombre.includes(busqueda) || dpi.includes(busqueda)) {
                 item.style.display = 'block';
                 encontrados++;

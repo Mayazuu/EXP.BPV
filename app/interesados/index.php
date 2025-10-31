@@ -9,7 +9,7 @@ if (!isset($_SESSION['id_usuario']) || !in_array($_SESSION['rol'], ['Secretaria'
     exit();
 }
 
-// ===== BÚSQUEDA MEJORADA CON CAMPOS SEPARADOS =====
+// ===== BÚSQUEDA CON CAMPOS SEPARADOS =====
 $buscar_nombre = isset($_GET['buscar_nombre']) ? trim($_GET['buscar_nombre']) : '';
 $buscar_apellido = isset($_GET['buscar_apellido']) ? trim($_GET['buscar_apellido']) : '';
 $buscar_documento = isset($_GET['buscar_documento']) ? trim($_GET['buscar_documento']) : '';

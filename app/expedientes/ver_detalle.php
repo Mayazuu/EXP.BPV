@@ -6,7 +6,7 @@ if (isset($_GET['id_expediente'])) {
     $id = (int)$_GET['id_expediente'];
 
     $stmt = $conn->prepare("
-        SELECT 
+        SELECT
             e.id_expediente,
             e.ficha_social,
             e.numero_caso,
@@ -210,13 +210,13 @@ if (isset($_GET['id_expediente'])) {
         echo '<div style="text-align:center; padding:40px; color:#dc3545;">
                 <h3>❌ Expediente no encontrado</h3>
                 <p>El expediente solicitado no existe o fue eliminado.</p>
-              </div>';
+            </div>';
     endif;
 } else {
     echo '<div style="text-align:center; padding:40px; color:#dc3545;">
             <h3>⚠️ Error</h3>
             <p>No se especificó un ID de expediente.</p>
-          </div>';
+        /div>';
 }
 ?>
 

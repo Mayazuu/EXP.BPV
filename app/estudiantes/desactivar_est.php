@@ -57,7 +57,7 @@ try {
 
     // Registrar en transacciones
     $sql_trans = "INSERT INTO transacciones (id_usuario, tabla, id_registro, descripcion, fecha_hora, ip)
-                  VALUES (:id_usuario, :tabla, :id_registro, :descripcion, NOW(), :ip)";
+                VALUES (:id_usuario, :tabla, :id_registro, :descripcion, NOW(), :ip)";
     $stmt_trans = $conn->prepare($sql_trans);
     $stmt_trans->execute([
         ':id_usuario' => $_SESSION['id_usuario'],

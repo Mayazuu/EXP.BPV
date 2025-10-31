@@ -26,7 +26,7 @@ if (isset($_POST['id_estado'])) {
     $estado_seleccionado = $_POST['id_estado'];
     $fecha_desde = $_POST['fecha_desde'] ?? '';
     $fecha_hasta = $_POST['fecha_hasta'] ?? '';
-    
+
     // Verificar si es "todos" o un estado específico
     if ($estado_seleccionado === 'todos') {
         $estado_nombre = 'Todos los estados';
@@ -40,10 +40,10 @@ if (isset($_POST['id_estado'])) {
         $sql_where = "WHERE p.id_estado_prest = ?";
         $params = [$estado_seleccionado];
     }
-    
-    // Consulta de préstamos 
+
+    // Consulta de préstamos
     $sql = "
-        SELECT 
+        SELECT
             p.id_prestamo,
             e.dpi_estudiante AS DPI_estudiante,
             CONCAT(e.nombre, ' ', e.apellido) AS nombre_estudiante,
@@ -52,27 +52,27 @@ if (isset($_POST['id_estado'])) {
             p.fecha_estimada_dev,
             p.fecha_devolucion,
             ep.estado_prest AS estado,
-            (SELECT u.usuario FROM transacciones t 
-             INNER JOIN usuarios u ON t.id_usuario = u.id_usuario 
-             WHERE t.tabla = 'prestamos'
-             AND t.id_registro = p.id_prestamo
-             ORDER BY t.fecha_hora DESC
-             LIMIT 1) AS usuario_registro
+            (SELECT u.usuario FROM transacciones t
+            INNER JOIN usuarios u ON t.id_usuario = u.id_usuario
+            WHERE t.tabla = 'prestamos'
+            AND t.id_registro = p.id_prestamo
+            ORDER BY t.fecha_hora DESC
+            LIMIT 1) AS usuario_registro
         FROM prestamos p
         INNER JOIN estudiantes e ON p.id_estudiante = e.id_estudiante
         INNER JOIN estados_prest ep ON p.id_estado_prest = ep.id_estado_prest
         $sql_where
     ";
-    
+
     // Agregar filtro de fechas si están presentes
     if ($fecha_desde && $fecha_hasta) {
         $sql .= " AND p.fecha_entrega BETWEEN ? AND ?";
         $params[] = $fecha_desde;
         $params[] = $fecha_hasta;
     }
-    
+
     $sql .= " ORDER BY p.fecha_entrega DESC";
-    
+
     $stmt = $conn->prepare($sql);
     $stmt->execute($params);
     $prestamos = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -101,9 +101,9 @@ if (isset($_POST['id_estado'])) {
 
         <!-- FORMULARIO DE FILTROS -->
         <form method="POST" class="form-reporte">
-            
+
             <div class="filtros-opciones">
-                
+
                 <!-- FILTRO POR ESTADO -->
             <div class="filtro-opcion-multi">
                     <label for="filtro_estado" class="filtro-label">
@@ -139,12 +139,12 @@ if (isset($_POST['id_estado'])) {
                             <div>
                                 <label>Desde:</label>
                                 <input type="date" name="fecha_desde" id="fecha_desde" class="form-control"
-                                       value="<?= htmlspecialchars($fecha_desde) ?>">
+                                    value="<?= htmlspecialchars($fecha_desde) ?>">
                             </div>
                             <div>
                                 <label>Hasta:</label>
                                 <input type="date" name="fecha_hasta" id="fecha_hasta" class="form-control"
-                                       value="<?= htmlspecialchars($fecha_hasta) ?>">
+                                    value="<?= htmlspecialchars($fecha_hasta) ?>">
                             </div>
                         </div>
                     </div>
@@ -234,7 +234,7 @@ document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
     checkbox.addEventListener('change', function() {
         const detalleId = 'detalle_' + this.id.replace('filtro_', '');
         const elemento = document.getElementById(detalleId);
-        
+
         if (elemento) {
             if (this.checked) {
                 elemento.classList.remove('oculto');
@@ -253,7 +253,7 @@ document.addEventListener('DOMContentLoaded', function() {
         checkbox.checked = true;
         document.getElementById('detalle_estado').classList.remove('oculto');
     }
-    
+
     const fechaDesde = document.getElementById('fecha_desde');
     const fechaHasta = document.getElementById('fecha_hasta');
     if (fechaDesde.value && fechaHasta.value) {
@@ -268,25 +268,25 @@ function generarPDF() {
     form.method = 'POST';
     form.action = 'generar_pdf_prestamos.php';
     form.target = '_blank';
-    
+
     const inputEstado = document.createElement('input');
     inputEstado.type = 'hidden';
     inputEstado.name = 'id_estado';
     inputEstado.value = document.getElementById('id_estado').value;
     form.appendChild(inputEstado);
-    
+
     const inputFechaDesde = document.createElement('input');
     inputFechaDesde.type = 'hidden';
     inputFechaDesde.name = 'fecha_desde';
     inputFechaDesde.value = document.getElementById('fecha_desde').value;
     form.appendChild(inputFechaDesde);
-    
+
     const inputFechaHasta = document.createElement('input');
     inputFechaHasta.type = 'hidden';
     inputFechaHasta.name = 'fecha_hasta';
     inputFechaHasta.value = document.getElementById('fecha_hasta').value;
     form.appendChild(inputFechaHasta);
-    
+
     document.body.appendChild(form);
     form.submit();
     document.body.removeChild(form);

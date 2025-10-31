@@ -24,20 +24,19 @@ $error = $_GET['error'] ?? '';
 <div class="container-cambio">
 <?php include('../navbar.php'); ?>
 <?php include('../boton_ayuda.php'); ?>
-<?php include('../boton_volver.php'); ?>
 
     <div class="header-cambio">
         <img src="../img/logo.png" alt="Logo Bufete Popular">
         <h2>Cambiar Contraseña</h2>
         <p>Bienvenido/a, <strong><?= htmlspecialchars($_SESSION['nombre']) ?></strong></p>
     </div>
-    
+
     <?php if ($mensaje): ?>
         <div class="mensaje-exito">
             <?= htmlspecialchars($mensaje) ?>
         </div>
     <?php endif; ?>
-    
+
     <?php if ($error): ?>
         <div class="mensaje-error">
             <?= htmlspecialchars($error) ?>
@@ -45,7 +44,7 @@ $error = $_GET['error'] ?? '';
     <?php endif; ?>
 
     <form action="procesar_cambio_contrasena.php" method="POST" id="formCambioPass">
-        
+
         <div class="form-group">
             <label for="contrasena_actual">Contraseña Actual</label>
             <input type="password" name="contrasena_actual" id="contrasena_actual" required>
@@ -141,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateStrengthBar(strength) {
         const bar = document.getElementById('strengthBar');
         bar.className = 'password-strength';
-        
+
         if (strength <= 2) {
             bar.classList.add('strength-weak');
         } else if (strength <= 4) {
@@ -153,10 +152,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function isPasswordValid(password) {
         return password.length >= 8 &&
-               /[A-Z]/.test(password) &&
-               /[a-z]/.test(password) &&
-               /[0-9]/.test(password) &&
-               /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+            /[A-Z]/.test(password) &&
+            /[a-z]/.test(password) &&
+            /[0-9]/.test(password) &&
+            /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
     }
 });
 </script>

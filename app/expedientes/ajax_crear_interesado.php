@@ -24,7 +24,7 @@ try {
     $direccion_exacta = trim($_POST['direccion'] ?? '');
     $id_lugar = $_POST['id_lugar'] ?? '';
     $otro_lugar = trim($_POST['otro_lugar'] ?? '');
-    
+
     // Validaciones básicas
     if (empty($nombre) || empty($apellido)) {
         throw new Exception('Nombre y apellido son obligatorios');
@@ -61,22 +61,22 @@ try {
             throw new Exception('Formato de teléfono inválido');
         }
     }
-    
+
     $conn->beginTransaction();
-    
+
     $nombre_lugar_final = '';
-    
+
     // Manejo de lugar (municipio)
     if ($id_lugar === 'otros') {
         if (empty($otro_lugar)) {
             throw new Exception('Debe ingresar el nombre del municipio');
         }
-        
+
         // Verificar si el municipio ya existe
         $stmt = $conn->prepare("SELECT id_lugar, municipio FROM lugares WHERE LOWER(municipio) = LOWER(?)");
         $stmt->execute([$otro_lugar]);
         $lugar_existente = $stmt->fetch(PDO::FETCH_ASSOC);
-        
+
         if ($lugar_existente) {
             $id_lugar = $lugar_existente['id_lugar'];
             $nombre_lugar_final = $lugar_existente['municipio'];
@@ -94,20 +94,20 @@ try {
         $lugar = $stmt->fetch(PDO::FETCH_ASSOC);
         $nombre_lugar_final = $lugar ? $lugar['municipio'] : 'Desconocido';
     }
-    
+
     // Validar que tengamos un ID de lugar válido
     if (empty($id_lugar) || !is_numeric($id_lugar)) {
         throw new Exception('Debe seleccionar un municipio válido');
     }
-    
+
     // ================================================================
-    // INSERTAR INTERESADO 
+    // INSERTAR INTERESADO
     // ================================================================
     $stmt = $conn->prepare("
         INSERT INTO interesados (dpi_interesado, nombre, apellido, telefono, direccion_exacta, id_lugar)
         VALUES (?, ?, ?, ?, ?, ?)
     ");
-    
+
     $stmt->execute([
         $dpi ?: null,
         $nombre,
@@ -116,23 +116,23 @@ try {
         $direccion_exacta,
         $id_lugar
     ]);
-    
+
     $id_interesado = $conn->lastInsertId();
-    
+
     // Registrar transacción
     $ip = $_SERVER['REMOTE_ADDR'] ?? 'Desconocida';
     $dpi_texto = !empty($dpi) ? $dpi : 'No registrado';
     $telefono_texto = !empty($telefono) ? $telefono : 'No registrado';
     $descripcion = "Creó interesado desde expedientes: $nombre $apellido (ID: $id_interesado, DPI: $dpi_texto, Tel: $telefono_texto, Municipio: $nombre_lugar_final)";
-    
+
     $stmt = $conn->prepare("
         INSERT INTO transacciones (id_usuario, tabla, id_registro, descripcion, fecha_hora, ip)
         VALUES (?, 'interesados', ?, ?, NOW(), ?)
     ");
     $stmt->execute([$_SESSION['id_usuario'], $id_interesado, $descripcion, $ip]);
-    
+
     $conn->commit();
-    
+
     // Devolver datos del interesado creado
     echo json_encode([
         'success' => true,
@@ -145,7 +145,7 @@ try {
             'municipio' => $nombre_lugar_final
         ]
     ]);
-    
+
 } catch (PDOException $e) {
     if ($conn->inTransaction()) {
         $conn->rollBack();

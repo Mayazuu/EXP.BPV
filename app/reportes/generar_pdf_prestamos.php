@@ -84,12 +84,12 @@ $sql = "
         p.fecha_estimada_dev,
         p.fecha_devolucion,
         ep.estado_prest AS estado,
-        (SELECT u.usuario FROM transacciones t 
-         INNER JOIN usuarios u ON t.id_usuario = u.id_usuario 
-         WHERE t.tabla = 'prestamos'
-           AND t.id_registro = p.id_prestamo
-         ORDER BY t.fecha_hora DESC
-         LIMIT 1) AS usuario_registro
+        (SELECT u.usuario FROM transacciones t
+        INNER JOIN usuarios u ON t.id_usuario = u.id_usuario
+        WHERE t.tabla = 'prestamos'
+        AND t.id_registro = p.id_prestamo
+        ORDER BY t.fecha_hora DESC
+        LIMIT 1) AS usuario_registro
     FROM prestamos p
     INNER JOIN estudiantes e ON p.id_estudiante = e.id_estudiante
     INNER JOIN estados_prest ep ON p.id_estado_prest = ep.id_estado_prest
@@ -133,7 +133,7 @@ if (empty($prestamos)) {
 // Generar PDF
 class PDF extends FPDF {
     function Header() {
-        $logo_path = $_SERVER['DOCUMENT_ROOT'] . '/bufete2/app/img/logo.png';
+        $logo_path = $_SERVER['DOCUMENT_ROOT'] . '/bufete/app/img/logo.png';
         if(file_exists($logo_path)) $this->Image($logo_path, 10, 8, 25);
 
         $this->SetFont('Arial', 'B', 16);

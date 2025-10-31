@@ -176,7 +176,7 @@ function construirUrlPaginacion($pagina) {
                 <i class="fas fa-user-plus"></i>
                 <h3>Crear Nuevo Usuario</h3>
             </div>
-            
+
             <div class="info-box-modal">
                 <i class="fas fa-info-circle"></i>
                 <p>El usuario se generará automáticamente como: <strong>primera letra del nombre + apellido</strong></p>
@@ -277,14 +277,14 @@ function construirUrlPaginacion($pagina) {
                 <i class="fas fa-user-edit"></i>
                 <h3>Editar Usuario</h3>
             </div>
-            
+
             <div class="info-usuario-modal">
                 <p><strong>Usuario:</strong> <span id="editar_usuario_text"></span></p>
             </div>
 
             <form id="formEditar" class="formulario-modal">
                 <input type="hidden" id="editar_id" name="id">
-                
+
                 <div class="form-row">
                     <div class="form-group">
                         <label for="editar_nombre">

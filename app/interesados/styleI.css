@@ -19,9 +19,7 @@ body {
     margin: 0 auto;
 }
 
-.container {
-    width: 100%;
-}
+.container {width: 100%;}
 
 .card {
     background: white;

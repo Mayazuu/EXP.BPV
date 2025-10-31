@@ -48,7 +48,7 @@ try {
         INSERT INTO estudiantes (nombre, apellido, dpi_estudiante, carnetEstudiantil, telefono, id_estado)
         VALUES (?, ?, ?, ?, ?, 1)
     ");
-    
+
     $stmt->execute([
         $nombre,
         $apellido,

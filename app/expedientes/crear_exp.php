@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (isset($_POST['numero_caso']) && !empty(trim($_POST['numero_caso']))) {
             $numero_caso = trim($_POST['numero_caso']);
-            
+
             // Validar que sea numérico
             if (!is_numeric($numero_caso)) {
                 $error = "El número de caso debe ser un número";
@@ -179,50 +179,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // ===== INSERTAR EXPEDIENTE =====
         $conn->beginTransaction();
-        
+
         // Obtener los DPIs si existen (opcionales)
         $stmt_get_dpi_int = $conn->prepare("SELECT dpi_interesado FROM interesados WHERE id_interesado = ?");
         $stmt_get_dpi_int->execute([$id_interesado]);
         $dpi_interesado_valor = $stmt_get_dpi_int->fetchColumn() ?: null;
-        
+
         $stmt_get_dpi_est = $conn->prepare("SELECT dpi_estudiante FROM estudiantes WHERE id_estudiante = ?");
         $stmt_get_dpi_est->execute([$id_estudiante]);
         $dpi_estudiante_valor = $stmt_get_dpi_est->fetchColumn() ?: null;
-        
+
         // Insertar expediente
         $stmt = $conn->prepare("INSERT INTO expedientes
-            (ficha_social, numero_caso, anio, num_proceso, id_estado_exp, folios, 
-             id_interesado, dpi_interesado_exp, id_estudiante, dpi_estudiante_exp,
-             id_asesor, id_juzgado, id_tipo_exp, fecha_inicio, fecha_audiencia1, 
-             fecha_audiencia2, fecha_finalizacion, id_estante, observaciones)
+            (ficha_social, numero_caso, anio, num_proceso, id_estado_exp, folios,
+            id_interesado, dpi_interesado_exp, id_estudiante, dpi_estudiante_exp,
+            id_asesor, id_juzgado, id_tipo_exp, fecha_inicio, fecha_audiencia1,
+            fecha_audiencia2, fecha_finalizacion, id_estante, observaciones)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        
+
         $stmt->execute([
-            $ficha_social, 
-            $numero_caso, 
-            $anio, 
-            $num_proceso, 
-            $id_estado_exp, 
+            $ficha_social,
+            $numero_caso,
+            $anio,
+            $num_proceso,
+            $id_estado_exp,
             $folios,
             $id_interesado,
             $dpi_interesado_valor,
             $id_estudiante,
             $dpi_estudiante_valor,
-            $id_asesor, 
-            $id_juzgado, 
+            $id_asesor,
+            $id_juzgado,
             $id_tipo_exp,
-            $fecha_inicio, 
-            $fecha_audiencia1, 
-            $fecha_audiencia2, 
-            $fecha_finalizacion, 
-            $id_estante, 
+            $fecha_inicio,
+            $fecha_audiencia1,
+            $fecha_audiencia2,
+            $fecha_finalizacion,
+            $id_estante,
             $observaciones
         ]);
 
         // Validar nuevo estante
         if (isset($_POST['id_estante']) && $_POST['id_estante'] === 'otro') {
             $nuevo_estante = trim($_POST['nuevo_numero_estante'] ?? '');
-            
+
             // Validar que no esté vacío
             if (empty($nuevo_estante)) {
                 $error = "El número de estante es obligatorio";
@@ -242,7 +242,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             else {
                 // Validación exitosa
                 $numero_estante = (int)$nuevo_estante;
-                
+
                 // Verificar si ya existe (opcional)
                 // $existe = verificarEstanteExistente($numero_estante);
                 // if ($existe) {
@@ -391,7 +391,7 @@ $areas = $conn->query("SELECT id_area, area
                 <div>
                     <label class="form-label campo-obligatorio">Número de Folios</label>
                     <input type="number" name="folios" class="form-input" min="1" required
-                           value="<?= htmlspecialchars($_POST['folios'] ?? 0) ?>">
+                        value="<?= htmlspecialchars($_POST['folios'] ?? 0) ?>">
                 </div>
 
                 <div>
@@ -616,7 +616,7 @@ $areas = $conn->query("SELECT id_area, area
                 <label>Nombre *</label>
                 <input type="text" id="int_nombre" required>
             </div>
-            
+
             <div class="modal-form-group">
                 <label>Apellido *</label>
                 <input type="text" id="int_apellido" required>
@@ -663,8 +663,7 @@ $areas = $conn->query("SELECT id_area, area
                     📍 Nombre del nuevo municipio *
                 </label>
                 <input type="text" id="int_otro_lugar" 
-                    tyle="width: 100%; padding: 12px; border: 2px solid #E5E7EB; border-radius: 8px; font-size: 14px;" 
-                    placeholder="Ej: Esquipulas, Chiquimula">
+                    tyle="width: 100%; padding: 12px; border: 2px solid #E5E7EB; border-radius: 8px; font-size: 14px;"
                 <small style="color: #6B7280; display: block; margin-top: 8px;">
                     💡 Este municipio se agregará automáticamente a la lista
                 </small>
@@ -710,7 +709,7 @@ $areas = $conn->query("SELECT id_area, area
 
 <script>
 // ========================================
-// CONFIGURACIÓN DE SELECT2 MEJORADO
+// CONFIGURACIÓN DE SELECT2
 // ========================================
 $(document).ready(function() {
     // Select2 normal para los demás campos
@@ -726,7 +725,7 @@ $(document).ready(function() {
             }
         }
     });
-    
+
     // Select2 especial para tipo de expediente con búsqueda por área
     $('.select2-tipo').select2({
         placeholder: 'Buscar por nombre o área legal...',
@@ -828,12 +827,12 @@ document.getElementById('select-tipo').addEventListener('change', function() {
     const campoTipo = document.getElementById('nuevo-tipo');
     const campoArea = document.getElementById('nueva-area');
     const mostrar = this.value === 'otro';
-    
+
     campoTipo.style.display = mostrar ? 'block' : 'none';
     campoArea.style.display = mostrar ? 'block' : 'none';
     campoTipo.required = mostrar;
     campoArea.required = mostrar;
-    
+
     if (!mostrar) {
         campoTipo.value = '';
         campoArea.value = '';
@@ -858,14 +857,14 @@ document.getElementById('select-estante').addEventListener('change', function() 
 function validarNumeroCaso(input) {
     // Eliminar cualquier caracter que no sea número
     input.value = input.value.replace(/[^0-9]/g, '');
-    
+
     // Convertir a número y validar que sea positivo
     let valor = parseInt(input.value);
-    
+
     if (valor < 1 && input.value !== '') {
         input.value = '';
     }
-    
+
     // Eliminar ceros a la izquierda
     if (input.value.length > 1 && input.value[0] === '0') {
         input.value = input.value.replace(/^0+/, '');
@@ -894,14 +893,14 @@ document.getElementById('numero-caso').addEventListener('paste', function(e) {
 function validarEstante(input) {
     // Eliminar cualquier caracter que no sea número
     input.value = input.value.replace(/[^0-9]/g, '');
-    
+
     // Convertir a número y validar que sea positivo
     let valor = parseInt(input.value);
-    
+
     if (valor < 1 && input.value !== '') {
         input.value = '';
     }
-    
+
     // Eliminar ceros a la izquierda
     if (input.value.length > 1 && input.value[0] === '0') {
         input.value = input.value.replace(/^0+/, '');
@@ -912,10 +911,10 @@ function validarEstante(input) {
 document.querySelector('form').addEventListener('submit', function(e) {
     const selectEstante = document.getElementById('select-estante');
     const nuevoEstante = document.getElementById('nuevo-estante');
-    
+
     if (selectEstante.value === 'otro') {
         const valor = nuevoEstante.value.trim();
-        
+
         if (valor === '') {
             e.preventDefault();
             alert('Por favor, ingrese el número del nuevo estante');
@@ -993,22 +992,22 @@ function toggleOtroLugar() {
     const select = document.getElementById('int_lugar');
     const div = document.getElementById('otroLugarDiv');
     const input = document.getElementById('int_otro_lugar');
-    
+
     console.log('toggleOtroLugar llamado, valor:', select.value); // Debug
-    
+
     if (select.value === 'otros') {
         // Mostrar con animación
         div.style.display = 'block';
         input.required = true;
         input.focus(); // Poner foco en el campo
-        
+
         console.log('Campo mostrado'); // Debug
     } else {
         // Ocultar
         div.style.display = 'none';
         input.required = false;
         input.value = '';
-        
+
         console.log('Campo oculto'); // Debug
     }
 }
@@ -1019,7 +1018,7 @@ function toggleOtroLugar() {
 // ========================================
 function guardarEstudiante(event) {
     event.preventDefault();
-    
+
     const formData = new FormData();
     formData.append('nombre', document.getElementById('est_nombre').value);
     formData.append('apellido', document.getElementById('est_apellido').value);
@@ -1028,10 +1027,10 @@ function guardarEstudiante(event) {
     formData.append('telefono', document.getElementById('est_telefono').value);
     formData.append('id_carrera', document.getElementById('est_carrera').value);
     formData.append('nueva_carrera', document.getElementById('est_nueva_carrera').value);
-    
+
     const modal = document.getElementById('modalEstudiante');
     modal.classList.add('loading');
-    
+
     fetch('ajax_crear_estudiante.php', {
         method: 'POST',
         body: formData
@@ -1039,27 +1038,27 @@ function guardarEstudiante(event) {
     .then(response => response.json())
     .then(data => {
         modal.classList.remove('loading');
-        
+
         if (data.success) {
             // Agregar el nuevo estudiante al select
             const select = document.getElementById('select-estudiante');
             const option = document.createElement('option');
             option.value = data.estudiante.id;
             option.selected = true;
-            
+
             let texto = data.estudiante.nombre + ' ' + data.estudiante.apellido;
             if (data.estudiante.dpi) texto += ' - DPI: ' + data.estudiante.dpi;
             if (data.estudiante.carnet) texto += ' - Carnet: ' + data.estudiante.carnet;
-            
+
             option.textContent = texto;
             select.appendChild(option);
-            
+
             // Actualizar Select2
             $(select).trigger('change');
-            
+
             // Cerrar modal
             cerrarModalEstudiante();
-            
+
             // Mostrar mensaje
             alert('✅ ' + data.mensaje);
         } else {
@@ -1086,10 +1085,10 @@ function guardarInteresado(event) {
     formData.append('direccion', document.getElementById('int_direccion').value);
     formData.append('id_lugar', document.getElementById('int_lugar').value);
     formData.append('otro_lugar', document.getElementById('int_otro_lugar').value);
-    
+
     const modal = document.getElementById('modalInteresado');
     modal.classList.add('loading');
-    
+
     fetch('ajax_crear_interesado.php', {
         method: 'POST',
         body: formData
@@ -1097,26 +1096,26 @@ function guardarInteresado(event) {
     .then(response => response.json())
     .then(data => {
         modal.classList.remove('loading');
-        
+
         if (data.success) {
             // Agregar el nuevo interesado al select
             const select = document.getElementById('select-interesado');
             const option = document.createElement('option');
             option.value = data.interesado.id;
             option.selected = true;
-            
+
             let texto = data.interesado.nombre + ' ' + data.interesado.apellido;
             if (data.interesado.dpi) texto += ' - DPI: ' + data.interesado.dpi;
-            
+
             option.textContent = texto;
             select.appendChild(option);
-            
+
             // Actualizar Select2
             $(select).trigger('change');
-            
+
             // Cerrar modal
             cerrarModalInteresado();
-            
+
             // Mostrar mensaje
             alert('✅ ' + data.mensaje);
         } else {
@@ -1133,15 +1132,12 @@ function guardarInteresado(event) {
 // ========================================
 function guardarAsesor(event) {
     event.preventDefault();
-    
     const formData = new FormData();
     formData.append('nombre', document.getElementById('ase_nombre').value);
     formData.append('apellido', document.getElementById('ase_apellido').value);
     formData.append('telefono', document.getElementById('ase_telefono').value);
-    
     const modal = document.getElementById('modalAsesor');
     modal.classList.add('loading');
-    
     fetch('ajax_crear_asesor.php', {
         method: 'POST',
         body: formData
@@ -1149,7 +1145,6 @@ function guardarAsesor(event) {
     .then(response => response.json())
     .then(data => {
         modal.classList.remove('loading');
-        
         if (data.success) {
             // Agregar el nuevo asesor al select
             const select = document.getElementById('select-asesor');
@@ -1158,13 +1153,13 @@ function guardarAsesor(event) {
             option.selected = true;
             option.textContent = data.asesor.nombre + ' ' + data.asesor.apellido;
             select.appendChild(option);
-            
+
             // Actualizar Select2
             $(select).trigger('change');
-            
+
             // Cerrar modal
             cerrarModalAsesor();
-            
+
             // Mostrar mensaje
             alert('✅ ' + data.mensaje);
         } else {

@@ -4,19 +4,10 @@
    ============================================ */
 
 /* ------------------ RESET ------------------ */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+* {box-sizing: border-box;margin: 0;padding: 0;}
 
 /* ------------------ MAIN ------------------ */
-main {
-    flex: 1 0 auto;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-}
+main {flex: 1 0 auto;display: flex;flex-direction: column;padding: 20px;}
 
 /* ------------------ NAVBAR menu de navegacion------------------ */
 .navbar {
@@ -50,26 +41,13 @@ main {
     transition: all 0.3s ease;
 }
 
-.navbar-brand:hover {
-    color: #90caf9;
-    transform: scale(1.02);
-}
+.navbar-brand:hover { color: #90caf9;transform: scale(1.02);}
+.navbar-menu {list-style: none;display: flex;margin: 0;padding: 0;gap: 0.5rem;}
+.nav-item { position: relative;}
 
-.navbar-menu {
-    list-style: none;
-    display: flex;
-    margin: 0;
-    padding: 0;
-    gap: 0.5rem;
-}
-
-.nav-item { 
-    position: relative;
-}
-
-.nav-item a { 
+.nav-item a {
     color: rgba(255, 255, 255, 0.9);
-    text-decoration: none; 
+    text-decoration: none;
     padding: 0.625rem 1.25rem;
     display: block;
     border-radius: 8px;
@@ -78,16 +56,8 @@ main {
     letter-spacing: 0.3px;
 }
 
-.nav-item:hover > a { 
-    background: rgba(255, 255, 255, 0.15);
-    color: #ffffff;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.nav-item a:active {
-    transform: translateY(0);
-}
+.nav-item:hover > a {background: rgba(255, 255, 255, 0.15);color: #ffffff;transform: translateY(-2px);box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);}
+.nav-item a:active {transform: translateY(0);}
 
 /* SOLUCIÓN: Crear un área invisible para mantener el hover */
 .nav-item::before {
@@ -118,44 +88,17 @@ main {
 }
 
 @keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from {opacity: 0;transform: translateY(-10px);}
+    to {opacity: 1; transform: translateY(0);}
 }
 
-.nav-item:hover .submenu {
-    display: block;
-}
+.nav-item:hover .submenu {display: block;}
 
-.submenu .nav-item {
-    margin: 0;
-}
-
-.submenu .nav-item a {
-    padding: 0.75rem 1.25rem;
-    border-radius: 0;
-    font-size: 0.875rem;
-    transition: all 0.3s ease;
-}
-
-.submenu .nav-item:hover a {
-    background: rgba(255, 255, 255, 0.15);
-    padding-left: 1.75rem;
-    color: #90caf9;
-}
-
-.submenu .nav-item:first-child a {
-    border-radius: 12px 12px 0 0;
-}
-
-.submenu .nav-item:last-child a {
-    border-radius: 0 0 12px 12px;
-}
+.submenu .nav-item {margin: 0;}
+.submenu .nav-item a {padding: 0.75rem 1.25rem;border-radius: 0;font-size: 0.875rem;transition: all 0.3s ease;}
+.submenu .nav-item:hover a {background: rgba(255, 255, 255, 0.15);padding-left: 1.75rem;color: #90caf9;}
+.submenu .nav-item:first-child a {border-radius: 12px 12px 0 0;}
+.submenu .nav-item:last-child a {border-radius: 0 0 12px 12px;}
 /* ------------------ FOOTER ------------------ */
 .footer, footer {
     background: linear-gradient(135deg, #184666 0%, #005fa3 100%);
@@ -169,27 +112,11 @@ main {
     box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.1);
 }
 
-.footer-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 1rem;
-}
+.footer-container {max-width: 1400px;margin: 0 auto;padding: 0 1rem;}
 
-footer p, .footer p {
-    margin: 0.25rem 0;
-}
-
-footer a, .footer a {
-    color: #90caf9;
-    text-decoration: none;
-    transition: color 0.3s ease;
-    font-weight: 500;
-}
-
-footer a:hover, .footer a:hover {
-    color: #ffffff;
-    text-decoration: underline;
-}
+footer p, .footer p { margin: 0.25rem 0;}
+footer a, .footer a {color: #90caf9; text-decoration: none; transition: color 0.3s ease; font-weight: 500;}
+footer a:hover, .footer a:hover {color: #ffffff;text-decoration: underline;}
 
 /* =========================
    RESPONSIVE
@@ -197,168 +124,65 @@ footer a:hover, .footer a:hover {
 
 /* Tablets grandes y pantallas medianas (1024px - 768px) */
 @media (max-width: 1024px) {
-    body {
-        padding-top: 65px;
-    }
+    body { padding-top: 65px;}
 
-    .navbar {
-        padding: 0.65rem 1.5rem;
-        font-size: 0.875rem;
-    }
+    .navbar {padding: 0.65rem 1.5rem;font-size: 0.875rem;}
+    .navbar-brand {font-size: 1.125rem;}
+    .navbar-menu {gap: 0.25rem;}
+    .nav-item a {padding: 0.5rem 1rem;font-size: 0.875rem;}
+    .submenu {min-width: 180px;}
 
-    .navbar-brand {
-        font-size: 1.125rem;
-    }
-
-    .navbar-menu {
-        gap: 0.25rem;
-    }
-
-    .nav-item a {
-        padding: 0.5rem 1rem;
-        font-size: 0.875rem;
-    }
-
-    .submenu {
-        min-width: 180px;
-    }
-
-    main {
-        padding: 15px;
-    }
+    main {padding: 15px;}
 
     /* Ajustes para formularios y contenedores */
     .formulario-grid,
-    .editar-info-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-    
+    .editar-info-grid {grid-template-columns: 1fr;gap: 20px;}
     .formulario-contenedor,
     .formulario-contenedor2,
-    .editar-container {
-        max-width: 800px;
-        padding: 30px;
-    }
+    .editar-container {max-width: 800px;padding: 30px;}
 }
 
 /* Tablets y móviles grandes (768px - 480px) */
 @media (max-width: 768px) {
-    body {
-        padding-top: 60px;
-    }
+    body {padding-top: 60px;}
 
-    .navbar {
-        padding: 0.625rem 1rem;
-        font-size: 0.813rem;
-    }
+    .navbar {padding: 0.625rem 1rem;font-size: 0.813rem;}
+    .navbar-brand {font-size: 1rem;}
+    .navbar-menu {gap: 0.25rem;}
+    .nav-item a {padding: 0.5rem 0.875rem;font-size: 0.813rem;}
+    .submenu {min-width: 160px;font-size: 0.75rem;}
+    .submenu .nav-item a {padding: 0.625rem 1rem;font-size: 0.75rem;}
 
-    .navbar-brand {
-        font-size: 1rem;
-    }
+    main {padding: 15px 10px;margin-top: 10px;}
 
-    .navbar-menu {
-        gap: 0.25rem;
-    }
-    
-    .nav-item a {
-        padding: 0.5rem 0.875rem;
-        font-size: 0.813rem;
-    }
-
-    .submenu {
-        min-width: 160px;
-        font-size: 0.75rem;
-    }
-
-    .submenu .nav-item a {
-        padding: 0.625rem 1rem;
-        font-size: 0.75rem;
-    }
-
-    main {
-        padding: 15px 10px;
-        margin-top: 10px;
-    }
-    
     .formulario-contenedor,
     .formulario-contenedor2,
     .editar-container,
     .tabla-contenedor,
-    .index-contenedor {
-        padding: 20px;
-        margin: 10px;
-    }
+    .index-contenedor {padding: 20px;margin: 10px;}
 
-    .footer, footer {
-        padding: 0.875rem 0.625rem;
-        font-size: 0.813rem;
-    }
+    .footer, footer {padding: 0.875rem 0.625rem;font-size: 0.813rem;}
 }
 
 /* Móviles pequeños (480px y menos) */
 @media (max-width: 480px) {
-    body {
-        padding-top: auto;
-    }
+    body {padding-top: auto;}
 
-    .navbar {
-        flex-direction: column;
-        padding: 0.5rem;
-        gap: 0.5rem;
-        position: relative;
-    }
+    .navbar {flex-direction: column; padding: 0.5rem; gap: 0.5rem; position: relative;}
+    .navbar-brand {font-size: 0.938rem;}
+    .navbar-menu {flex-wrap: wrap;justify-content: center;width: 100%;gap: 0.25rem;}
+    .nav-item {margin: 0;}
+    .nav-item a {padding: 0.5rem 0.75rem;font-size: 0.75rem;}
+    .submenu {position: relative;top: 0;left: 0;width: 100%;margin-top: 0.25rem;border-radius: 8px;}
 
-    .navbar-brand {
-        font-size: 0.938rem;
-    }
-    
-    .navbar-menu {
-        flex-wrap: wrap;
-        justify-content: center;
-        width: 100%;
-        gap: 0.25rem;
-    }
-
-    .nav-item {
-        margin: 0;
-    }
-
-    .nav-item a {
-        padding: 0.5rem 0.75rem;
-        font-size: 0.75rem;
-    }
-
-    .submenu {
-        position: relative;
-        top: 0;
-        left: 0;
-        width: 100%;
-        margin-top: 0.25rem;
-        border-radius: 8px;
-    }
-
-    main {
-        padding: 10px;
-        margin-top: 150px;
-    }
+    main {padding: 10px;margin-top: 150px;}
 
     .formulario-contenedor,
     .formulario-contenedor2,
     .editar-container,
     .tabla-contenedor,
-    .index-contenedor {
-        padding: 15px;
-        margin: 5px;
-    }
-
-    .footer, footer {
-        padding: 0.75rem 0.5rem;
-        font-size: 0.75rem;
-    }
-
-    .footer-container {
-        padding: 0 0.5rem;
-    }
+    .index-contenedor {padding: 15px;margin: 5px;}
+    .footer, footer {padding: 0.75rem 0.5rem;font-size: 0.75rem;}
+    .footer-container {padding: 0 0.5rem;}
 }
 

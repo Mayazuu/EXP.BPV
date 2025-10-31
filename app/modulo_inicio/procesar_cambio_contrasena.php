@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($usuario) {
         // Verificar que la contraseña actual sea correcta
         if (password_verify($contrasena_actual, $usuario['contrasena'])) {
-            
+
             // Hashear la nueva contraseña
             $nueva_hash = password_hash($contrasena_nueva, PASSWORD_DEFAULT);
 

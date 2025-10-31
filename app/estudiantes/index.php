@@ -123,7 +123,7 @@ $hay_busqueda = !empty($buscar_nombre) || !empty($buscar_apellido) || !empty($bu
                 <h1>👨‍🎓 Gestión de Estudiantes</h1>
             </div>
 
-            <!-- BARRA DE ACCIONES CON BÚSQUEDA MEJORADA -->
+            <!-- BARRA DE ACCIONES CON BÚSQUEDA-->
             <div class="action-bar">
                 <form method="GET" action="" class="search-form-advanced">
                     <div class="search-group">
@@ -316,7 +316,7 @@ $hay_busqueda = !empty($buscar_nombre) || !empty($buscar_apellido) || !empty($bu
                         for ($i = $inicio; $i <= $fin; $i++):
                         ?>
                             <a href="<?= buildPaginationUrl($i) ?>"
-                               class="pagination-btn <?= $i == $pagina_actual ? 'active' : '' ?>">
+                            class="pagination-btn <?= $i == $pagina_actual ? 'active' : '' ?>">
                                 <?= $i ?>
                             </a>
                         <?php endfor; ?>

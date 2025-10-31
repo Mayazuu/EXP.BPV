@@ -1,4 +1,4 @@
-<?php 
+<?php
 include('../session_config.php');
 
 // Verifica si hay sesión activa

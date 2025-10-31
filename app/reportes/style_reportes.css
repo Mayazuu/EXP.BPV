@@ -632,7 +632,7 @@ main.reportes-main {
     }
 }
 /* ═══════════════════════════════════════════════════════════════ */
-/* ESTILOS PARA TRANSACCIONES E INICIOS FALLIDOS - VERSIÓN COMPACTA */
+/* ESTILOS PARA TRANSACCIONES E INICIOS FALLIDOS */
 /* ═══════════════════════════════════════════════════════════════ */
 
 /* Ajuste para navbar fijo */
@@ -662,7 +662,7 @@ body.reportes-body {
     font-size: 16px;
 }
 
-/* Estadísticas Grid - COMPACTO Y CENTRADO */
+/* Estadísticas Grid */
 .estadisticas-grid {
     display: flex;
     justify-content: center;

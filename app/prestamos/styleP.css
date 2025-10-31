@@ -595,9 +595,7 @@ main {
     transform: rotate(90deg);
 }
 
-.modal-body {
-    padding: 30px;
-}
+.modal-body {padding: 30px;}
 
 .modal-buttons {
     display: flex;
@@ -682,9 +680,7 @@ main {
 }
 
 .estado-badge-detalle.vigente {background: #e8f5e9;color: #2e7d32;}
-
 .estado-badge-detalle.vencido {background: #ffebee;color: #c62828;}
-
 .estado-badge-detalle.devuelto {background: #e3f2fd;color: #1565c0;}
 
 /* ========== FORMULARIOS EN MODALES ========== */
@@ -1125,7 +1121,7 @@ select.form-input {
         width: 100%;
         text-align: center;
     }
-    
+
     .index-wrapper {
         overflow-x: auto;
     }
@@ -1150,7 +1146,7 @@ select.form-input {
         font-size: 0.75rem;
         padding: 8px 5px;
     }
-    
+
     .badge {
         font-size: 0.75rem;
         padding: 4px 10px;

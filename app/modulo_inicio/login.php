@@ -38,7 +38,7 @@ $error = $_GET['error'] ?? '';
             <img src="../img/logo.png" alt="Logo Bufete Popular">
         </div>
         <h2>Acceso al Sistema</h2>
-        
+
         <?php if ($error): ?>
             <div class="alert alert-error">
                 <i class="fas fa-exclamation-circle"></i>
@@ -63,10 +63,10 @@ $error = $_GET['error'] ?? '';
         <form action="validar.php" method="POST">
             <label for="usuario">Usuario</label>
             <input type="text" name="usuario" id="usuario" required autofocus>
-            
+
             <label for="contrasena">Contraseña</label>
             <input type="password" name="contrasena" id="contrasena" required>
-            
+
             <button type="submit">Ingresar</button>
         </form>
 

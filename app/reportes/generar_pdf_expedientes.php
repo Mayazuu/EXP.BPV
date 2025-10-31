@@ -158,7 +158,7 @@ if (empty($expedientes)) {
 class PDF extends FPDF {
 function Header() {
     $rutas_logo = [
-        $_SERVER['DOCUMENT_ROOT'] . '/bufete2/app/img/logo.png'
+        $_SERVER['DOCUMENT_ROOT'] . '/bufete/app/img/logo.png'
     ];
     
     $logo_encontrado = false;

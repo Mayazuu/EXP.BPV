@@ -1,6 +1,5 @@
 // ========================================
 // USUARIOS.JS - GESTIÓN DE USUARIOS
-// Versión sin cambio de contraseña en editar
 // ========================================
 
 // Variables globales
@@ -157,7 +156,7 @@ function abrirModalCrear() {
     // Limpiar formulario
     document.getElementById('formCrear').reset();
     document.getElementById('errorCrear').style.display = 'none';
-    
+
     // Mostrar modal
     document.getElementById('modalCrear').style.display = 'flex';
     

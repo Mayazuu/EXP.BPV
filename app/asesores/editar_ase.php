@@ -53,12 +53,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
         // Actualizar nombre, apellido y teléfono
-        $sql_update = "UPDATE asesores 
-                       SET nombre = :nombre,
-                           apellido = :apellido,
-                           telefono = :telefono 
-                       WHERE id_asesor = :id";
-        
+        $sql_update = "UPDATE asesores
+                    SET nombre = :nombre,
+                        apellido = :apellido,
+                        telefono = :telefono
+                    WHERE id_asesor = :id";
+
         $stmt_update = $conn->prepare($sql_update);
         $stmt_update->execute([
             ':nombre' => $nombre,

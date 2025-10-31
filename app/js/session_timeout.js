@@ -4,7 +4,7 @@
     // Configuración
     const TIEMPO_INACTIVIDAD = 30 * 60 * 1000; // 30 minutos en milisegundos
     const TIEMPO_ADVERTENCIA = 28 * 60 * 1000; // 28 minutos - advertir 2 minutos antes
-    
+
     let timerInactividad;
     let timerAdvertencia;
     let modalAdvertenciaAbierto = false;
@@ -31,9 +31,9 @@
                 </div>
             </div>
         `;
-        
+
         document.body.insertAdjacentHTML('beforeend', modalHTML);
-        
+
         // Event listeners
         document.getElementById('btnContinuarSesion').addEventListener('click', continuarSesion);
         document.getElementById('btnCerrarSesion').addEventListener('click', cerrarSesion);
@@ -42,11 +42,11 @@
     // Mostrar modal de advertencia
     function mostrarAdvertencia() {
         if (modalAdvertenciaAbierto) return;
-        
+
         modalAdvertenciaAbierto = true;
         const modal = document.getElementById('modalTimeoutAdvertencia');
         modal.style.display = 'flex';
-        
+
         // Iniciar countdown
         iniciarCountdown();
     }
@@ -55,20 +55,20 @@
     function iniciarCountdown() {
         let segundosRestantes = 120; // 2 minutos
         const spanTiempo = document.getElementById('tiempoRestante');
-        
+
         const countdown = setInterval(() => {
             segundosRestantes--;
-            
+
             const minutos = Math.floor(segundosRestantes / 60);
             const segundos = segundosRestantes % 60;
             spanTiempo.textContent = `${minutos}:${segundos.toString().padStart(2, '0')}`;
-            
+
             if (segundosRestantes <= 0) {
                 clearInterval(countdown);
                 cerrarSesion();
             }
         }, 1000);
-        
+
         // Guardar el interval para poder limpiarlo
         window.sessionCountdown = countdown;
     }
@@ -77,12 +77,12 @@
     function continuarSesion() {
         modalAdvertenciaAbierto = false;
         document.getElementById('modalTimeoutAdvertencia').style.display = 'none';
-        
+
         // Limpiar countdown
         if (window.sessionCountdown) {
             clearInterval(window.sessionCountdown);
         }
-        
+
         // Hacer una petición al servidor para renovar la sesión
         fetch('/renovar_sesion.php', {
             method: 'POST',
@@ -105,12 +105,12 @@
         // Limpiar timers existentes
         if (timerInactividad) clearTimeout(timerInactividad);
         if (timerAdvertencia) clearTimeout(timerAdvertencia);
-        
+
         // Timer para mostrar advertencia
         timerAdvertencia = setTimeout(() => {
             mostrarAdvertencia();
         }, TIEMPO_ADVERTENCIA);
-        
+
         // Timer para logout automático
         timerInactividad = setTimeout(() => {
             cerrarSesion();
@@ -136,12 +136,12 @@
     function inicializar() {
         // Crear modal
         crearModalAdvertencia();
-        
+
         // Agregar listeners de actividad
         eventosActividad.forEach(evento => {
             document.addEventListener(evento, detectarActividad, true);
         });
-        
+
         // Iniciar timers
         resetearTimers();
     }

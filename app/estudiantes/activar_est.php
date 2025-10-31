@@ -36,9 +36,9 @@ try {
 
     // Verificar que el estudiante existe y está inactivo
     $sql_check = "SELECT e.id_estudiante, e.nombre, e.apellido, e.id_estado, es.estado
-                  FROM estudiantes e
-                  INNER JOIN estados es ON e.id_estado = es.id_estado
-                  WHERE e.id_estudiante = :id";
+                FROM estudiantes e
+                INNER JOIN estados es ON e.id_estado = es.id_estado
+                WHERE e.id_estudiante = :id";
     $stmt_check = $conn->prepare($sql_check);
     $stmt_check->execute([':id' => $id_estudiante]);
     $estudiante = $stmt_check->fetch(PDO::FETCH_ASSOC);
@@ -56,7 +56,7 @@ try {
 
     // Registrar en transacciones
     $sql_trans = "INSERT INTO transacciones (id_usuario, tabla, id_registro, descripcion, fecha_hora, ip)
-                  VALUES (:id_usuario, :tabla, :id_registro, :descripcion, NOW(), :ip)";
+                VALUES (:id_usuario, :tabla, :id_registro, :descripcion, NOW(), :ip)";
     $stmt_trans = $conn->prepare($sql_trans);
     $stmt_trans->execute([
         ':id_usuario' => $_SESSION['id_usuario'],

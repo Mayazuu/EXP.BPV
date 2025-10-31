@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Validar Carnet solo SI se ingresó
+    // Validar Carnet solo SI se ingreso
     if (!empty($carnet)) {
         if (!preg_match('/^\d{7}$/', $carnet)) {
             header("Location: index.php?mensaje=" . urlencode("El carnet debe tener exactamente 7 dígitos"));

@@ -1,7 +1,3 @@
-/* ==========================================
-   MÓDULO ASESORES
-   ========================================== */
-
 /* ================= VARIABLES ================= */
 :root {
     --primary: #3B82F6;
@@ -22,19 +18,9 @@
     padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    padding-top: 70px; /* Espacio para navbar */
-}
+body {min-height: 100vh; display: flex; flex-direction: column;padding-top: 70px; /* Espacio para navbar */}
 
-html, body {
-    height: 100%;
-    background: #c6d2eb;
-    color: #1E293B;
-    overflow-x: hidden;
-}
+html, body {height: 100%;background: #c6d2eb;color: #1E293B;overflow-x: hidden;}
 
 main {
     display: flex;
@@ -46,12 +32,7 @@ main {
     margin: 0 auto;
 }
 
-.container {
-    width: 100%;
-    max-width: 1500px;
-    display: flex;
-    justify-content: center;
-}
+.container {width: 100%;max-width: 1500px;display: flex;justify-content: center;}
 
 /* ================= CARD ================= */
 .card {
@@ -64,17 +45,8 @@ main {
     margin: 0 auto;
 }
 
-.card-header {
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    padding: 2rem;
-    text-align: center;
-}
-
-.card-header h1 {
-    color: var(--white);
-    font-size: 2rem;
-    font-weight: 700;
-}
+.card-header {background: linear-gradient(135deg, var(--primary), var(--secondary));padding: 2rem;text-align: center;}
+.card-header h1 {color: var(--white);font-size: 2rem;font-weight: 700;}
 
 /* ================= BARRA DE ACCIONES ================= */
 .action-bar {
@@ -88,25 +60,9 @@ main {
     justify-content: center;
 }
 
-.search-form {
-    display: flex;
-    gap: 0.5rem;
-    flex: 1;
-    max-width: 1400px;
-}
-
-.search-input {
-    flex: 1;
-    padding: 0.75rem 1rem;
-    border: 2px solid #E5E7EB;
-    border-radius: 8px;
-    font-size: 1rem;
-}
-
-.search-input:focus {
-    outline: none;
-    border-color: var(--primary);
-}
+.search-form {display: flex;gap: 0.5rem;flex: 1;max-width: 1400px;}
+.search-input {flex: 1;padding: 0.75rem 1rem;border: 2px solid #E5E7EB;border-radius: 8px;font-size: 1rem;}
+.search-input:focus {outline: none; border-color: var(--primary);}
 
 /* ================= BOTONES ================= */
 .btn {
