@@ -20,6 +20,9 @@ function convertir_utf8($texto) {
 // Validar sesión
 if (!isset($_SESSION['id_usuario']) || !in_array($_SESSION['rol'], ['Secretaria', 'Directora'])) {
     ?>
+
+
+
     <!DOCTYPE html>
     <html lang="es">
     <head>
@@ -88,16 +91,16 @@ if (isset($_POST['filtro_estado']) && !empty($_POST['id_estado_exp'])) {
 }
 
 // Filtro por estudiante
-if (isset($_POST['filtro_estudiante']) && !empty($_POST['dpi_estudiante'])) {
-    $dpi_estudiante = $_POST['dpi_estudiante'];
-    $stmt = $conn->prepare("SELECT id_estudiante, CONCAT(nombre, ' ', apellido) as nombre_completo FROM estudiantes WHERE dpi_estudiante = ?");
-    $stmt->execute([$dpi_estudiante]);
-    $estudiante_data = $stmt->fetch(PDO::FETCH_ASSOC);
+if (isset($_POST['filtro_estudiante']) && !empty($_POST['id_estudiante'])) {
+    $id_estudiante = $_POST['id_estudiante'];
+    $stmt = $conn->prepare("SELECT CONCAT(nombre, ' ', apellido) as nombre_completo FROM estudiantes WHERE id_estudiante = ?");
+    $stmt->execute([$id_estudiante]);
+    $nombre_estudiante = $stmt->fetchColumn();
     
-    if ($estudiante_data) {
+    if ($nombre_estudiante) {
         $sql_where .= " AND e.id_estudiante = ?";
-        $params[] = $estudiante_data['id_estudiante'];
-        $filtros_aplicados[] = "Estudiante: {$estudiante_data['nombre_completo']}";
+        $params[] = $id_estudiante;
+        $filtros_aplicados[] = "Estudiante: {$nombre_estudiante}";
     }
 }
 

@@ -97,7 +97,7 @@
 
     // Cerrar sesión
     function cerrarSesion() {
-        window.location.href = '/modulo_inicio/logout.php';
+        window.location.href = 'modulo_inicio/logout.php';
     }
 
     // Resetear timers de inactividad

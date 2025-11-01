@@ -26,8 +26,7 @@ $anos = $conn->query("SELECT DISTINCT anio FROM expedientes ORDER BY anio DESC")
 $areas = $conn->query("SELECT a.id_area, a.area FROM areas a ORDER BY a.area")->fetchAll(PDO::FETCH_ASSOC);
 $tipos_caso = $conn->query("SELECT tc.id_tipo_exp, tc.caso, a.area FROM tipo_caso tc INNER JOIN areas a ON tc.id_area = a.id_area ORDER BY a.area, tc.caso")->fetchAll(PDO::FETCH_ASSOC);
 $estados = $conn->query("SELECT id_estado_exp, estado_exp FROM estados_exp ORDER BY estado_exp")->fetchAll(PDO::FETCH_ASSOC);
-$estudiantes = $conn->query("SELECT dpi_estudiante, CONCAT(nombre, ' ', apellido) as nombre_completo FROM estudiantes ORDER BY nombre")->fetchAll(PDO::FETCH_ASSOC);
-
+$estudiantes = $conn->query("SELECT id_estudiante, dpi_estudiante, CONCAT(nombre, ' ', apellido) as nombre_completo FROM estudiantes ORDER BY nombre")->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 <!DOCTYPE html>
@@ -139,7 +138,7 @@ $estudiantes = $conn->query("SELECT dpi_estudiante, CONCAT(nombre, ' ', apellido
                         </div>
 
                         <!-- Input hidden para enviar el DPI seleccionado -->
-                        <input type="hidden" name="dpi_estudiante" id="dpi_estudiante_selected">
+                        <input type="hidden" name="id_estudiante" id="id_estudiante">
 
                         <!-- Estudiante seleccionado -->
                         <div id="estudiante_seleccionado" class="estudiante-seleccionado oculto">
@@ -151,11 +150,12 @@ $estudiantes = $conn->query("SELECT dpi_estudiante, CONCAT(nombre, ' ', apellido
                         <div class="estudiantes-lista" id="lista_estudiantes">
                             <?php foreach($estudiantes as $est): ?>
                                 <div class="estudiante-item"
+                                    data-id="<?= $est['id_estudiante'] ?>"
                                     data-dpi="<?= $est['dpi_estudiante'] ?>"
                                     data-nombre="<?= strtolower(htmlspecialchars($est['nombre_completo'])) ?>"
-                                    onclick="seleccionarEstudiante('<?= $est['dpi_estudiante'] ?>', '<?= htmlspecialchars($est['nombre_completo']) ?>')">
+                                    onclick="seleccionarEstudiante('<?= $est['id_estudiante'] ?>', '<?= htmlspecialchars($est['nombre_completo']) ?>', '<?= $est['dpi_estudiante'] ?>')">
                                     <strong><?= htmlspecialchars($est['nombre_completo']) ?></strong><br>
-                                    <small class="texto-gris">DPI: <?= $est['dpi_estudiante'] ?></small>
+                                    <small class="texto-gris">DPI: <?= $est['dpi_estudiante'] ? $est['dpi_estudiante'] : 'Sin DPI' ?></small>
                                 </div>
                             <?php endforeach; ?>
                         </div>
@@ -260,9 +260,16 @@ if (inputBusqueda) {
 }
 
 // Seleccionar estudiante
-function seleccionarEstudiante(dpi, nombre) {
-    document.getElementById('dpi_estudiante_selected').value = dpi;
-    document.getElementById('nombre_seleccionado').textContent = nombre + ' - DPI: ' + dpi;
+function seleccionarEstudiante(id_estudiante, nombre, dpi) {
+    // Marcar checkbox automáticamente
+    document.getElementById('filtro_estudiante').checked = true;
+    
+    // Guardar el ID
+    document.getElementById('id_estudiante').value = id_estudiante;
+    
+    // Mostrar estudiante seleccionado
+    const dpiTexto = dpi ? ' - DPI: ' + dpi : ' (Sin DPI)';
+    document.getElementById('nombre_seleccionado').textContent = nombre + dpiTexto;
     document.getElementById('estudiante_seleccionado').classList.remove('oculto');
     document.getElementById('buscar_estudiante').value = '';
     document.getElementById('lista_estudiantes').classList.add('oculto');
@@ -270,7 +277,7 @@ function seleccionarEstudiante(dpi, nombre) {
 
 // Limpiar selección
 function limpiarEstudiante() {
-    document.getElementById('dpi_estudiante_selected').value = '';
+    document.getElementById('id_estudiante').value = '';
     document.getElementById('estudiante_seleccionado').classList.add('oculto');
     document.getElementById('lista_estudiantes').classList.remove('oculto');
     document.getElementById('buscar_estudiante').value = '';
